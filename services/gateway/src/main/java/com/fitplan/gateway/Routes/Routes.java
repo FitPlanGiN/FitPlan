@@ -18,4 +18,20 @@ public class Routes {
                 .route(RequestPredicates.path("/api/exercise"), HandlerFunctions.http("http://localhost:8080"))
                 .build();
     }
+
+    @Bean
+    public RouterFunction<ServerResponse> workoutServiceRoute() {
+
+        return GatewayRouterFunctions.route("workout")
+                .route(RequestPredicates.path("/api/workout"), HandlerFunctions.http("http://localhost:8081"))
+                .build();
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> validationServiceRoute() {
+
+        return GatewayRouterFunctions.route("validation")
+                .route(RequestPredicates.path("/api/validation"), HandlerFunctions.http("http://localhost:8082"))
+                .build();
+    }
 }

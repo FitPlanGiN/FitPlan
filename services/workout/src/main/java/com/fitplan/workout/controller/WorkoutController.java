@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/workout")
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class WorkoutController {
 
     private final WorkoutService workoutService;
@@ -21,7 +21,7 @@ public class WorkoutController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public String createWorkout(@RequestBody WorkoutRequest workoutRequest){
-        workoutService.createWorkout(workoutRequest);
-        return "Workout created";
+        String answerAI = workoutService.createWorkout(workoutRequest);
+        return "Workout created successfully. AI Feedback: " + answerAI;
     }
 }

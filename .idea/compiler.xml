@@ -11,6 +11,12 @@
         <module name="gateway" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="configserver" target="21" />
+      <module name="discoveryserver" target="21" />
+      <module name="validation" target="21" />
+      <module name="workout" target="21" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

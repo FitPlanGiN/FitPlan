@@ -1,0 +1,71 @@
+<div class="container mx-auto p-4">
+  <h2 class="text-2xl font-bold mb-4">Add Exercise</h2>
+  @if (exerciseCreated) {
+    <h4 class="text-green-500">Exercise Created Successfully</h4>
+  }
+  <form [formGroup]="addExerciseForm" (ngSubmit)="onSubmit()">
+    <!--
+    <div class="mb-4">
+      <label class="block text-gray-700" for="ID">ID</label>
+      <input
+        type="text"
+        id="id"
+        formControlName="ID"
+        class="border rounded w-full py-2 px-3 text-gray-700"
+      />
+      <div *ngIf="id?.invalid && (id?.dirty || id?.touched)" class="text-red-500">
+        <div *ngIf="id?.errors?.['required']">ID is required.</div>
+        <div *ngIf="id?.errors?.['minlength']">ID must be at least 3 characters long.</div>
+      </div>
+    </div>
+-->
+    <div class="mb-4">
+      <label class="block text-gray-700" for="name">Name</label>
+      <input
+        type="text"
+        id="name"
+        formControlName="name"
+        class="border rounded w-full py-2 px-3 text-gray-700"
+      />
+      <div *ngIf="name?.invalid && name?.dirty" class="text-red-500">
+        <div *ngIf="name?.errors?.['required']">Name is required.</div>
+        <div *ngIf="name?.errors?.['minlength']">Name must be at least 3 characters long.</div>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700" for="description">Description</label>
+      <textarea
+        id="description"
+        formControlName="description"
+        class="border rounded w-full py-2 px-3 text-gray-700"
+      ></textarea>
+      <div *ngIf="description?.invalid && description?.dirty" class="text-red-500">
+        <div *ngIf="description?.errors?.['required']">Description is required.</div>
+        <div *ngIf="description?.errors?.['minlength']">Description must be at least 10 characters long.</div>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700" for="category">Category</label>
+      <input
+        type="text"
+        id="category"
+        formControlName="category"
+        class="border rounded w-full py-2 px-3 text-gray-700"
+      />
+      <div *ngIf="category?.invalid && category?.dirty" class="text-red-500">
+        <div *ngIf="category?.errors?.['required']">Category is required.</div>
+        <div *ngIf="category?.errors?.['min']">Category must be valid.</div>
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+      [disabled]="addExerciseForm.invalid"
+    >
+      Add Exercise
+    </button>
+  </form>
+</div>

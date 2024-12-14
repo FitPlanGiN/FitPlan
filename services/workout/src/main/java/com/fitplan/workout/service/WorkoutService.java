@@ -4,7 +4,6 @@ import com.fitplan.workout.client.ValidationClient;
 import com.fitplan.workout.dto.WorkoutRequest;
 import com.fitplan.workout.model.Workout;
 import com.fitplan.workout.repository.WorkoutRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service

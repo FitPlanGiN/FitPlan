@@ -27,4 +27,8 @@ public class Workout {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Long getId() {
+        return id;
+    }
 }

@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "name": "WorkoutCreatedEvent",
+  "namespace": "com.fitplan.workout.event",
+  "fields": [
+    {"name": "id", "type": "long"},
+    {"name": "email", "type": "string"},
+    {"name": "firstName", "type": ["null", "string"], "default": null},
+    {"name": "lastName", "type": ["null", "string"], "default": null}
+  ]
+}

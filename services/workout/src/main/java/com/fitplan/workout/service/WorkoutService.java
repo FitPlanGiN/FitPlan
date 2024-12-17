@@ -29,8 +29,13 @@ public class WorkoutService {
         workout.setName(workoutRequest.name());
         workout.setDescription(workoutRequest.description());
         workoutRepository.save(workout);
+
         //send message to Kafka Topic with id, email
-        WorkoutCreatedEvent workoutCreatedEvent = new WorkoutCreatedEvent(workout.getId(), workoutRequest.userDetails().email());
+        WorkoutCreatedEvent workoutCreatedEvent = new WorkoutCreatedEvent();
+        workoutCreatedEvent.setId(workout.getId());
+        workoutCreatedEvent.setEmail(workoutRequest.userDetails().email());
+        workoutCreatedEvent.setFirstName(workoutRequest.userDetails().firstName());
+        workoutCreatedEvent.setLastName(workoutRequest.userDetails().lastName());
         log.info("Start - Workout created event sent to Kafka topic workout-created: {}", workoutCreatedEvent);
         kafkaTemplate.send("workout-created", workoutCreatedEvent);
         log.info("End - Workout created event sent to Kafka topic workout-created: {}", workoutCreatedEvent);

@@ -1,6 +1,7 @@
 package com.fitplan.workout.config;
 
 import com.fitplan.workout.client.ValidationClient;
+import io.micrometer.observation.ObservationRegistry;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,10 +20,11 @@ public class RestClientConfig {
     private String validationServiceUrl;
 
     @Bean
-    public ValidationClient validationClient() {
+    public ValidationClient validationClient(ObservationRegistry observationRegistry) {
         RestClient restClient = RestClient.builder()
                 .baseUrl(validationServiceUrl)
                 .requestFactory(getClientRequestFactory())
+                .observationRegistry(observationRegistry)
                 .build();
         var restClientAdapter = RestClientAdapter.create(restClient);
         var httpServiceProxyFactory = HttpServiceProxyFactory.builderFor(restClientAdapter).build();

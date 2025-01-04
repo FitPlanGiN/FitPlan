@@ -33,6 +33,7 @@ jobs:
     - name: Building and pushing configserver
       run: mvn package dockerfile:push --file configserver/pom.xml
       env:
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME  }}
         MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD  }}
 

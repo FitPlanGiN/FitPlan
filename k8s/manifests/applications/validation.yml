@@ -12,6 +12,10 @@ spec:
       labels:
         app: validation
     spec:
+      initContainers:
+        - name: wait-for-configserver
+          image: busybox
+          command: [ 'sh', '-c', 'until nc -z configserver 8888; do echo waiting for configserver; sleep 5; done' ]
       containers:
         - name: validation
           image: lordsecond/validation:latest

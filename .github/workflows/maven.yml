@@ -40,19 +40,22 @@ jobs:
         docker push ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest
       working-directory: fitplanfrontend
 
-    - name: Azure login with Managed Identity
-      uses: azure/login@v2
+    # Google Cloud login using Service Account Key
+    - name: Google Cloud authentication
+      uses: google-github-actions/auth@v0
       with:
-        auth-type: 'MSI'
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
-    - name: Set AKS context
-      run: |
-        az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }}
-        kubectl config current-context
+    # Set GKE context
+    - name: Set GKE context
+      uses: google-github-actions/set-kubeconfig@v0
+      with:
+        project_id: ${{ secrets.PROJECT_ID }}
+        cluster_name: ${{ secrets.GKE_CLUSTER }}
+        location: ${{ secrets.GKE_ZONE }}
 
-    - name: Deploy manifests to AKS
+    # Deploy manifests to GKE
+    - name: Deploy manifests to GKE
       run: |
         kubectl apply -f ./k8s/manifests/infrastructure
         kubectl apply -f ./k8s/manifests/applications

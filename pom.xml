@@ -27,7 +27,7 @@
   <properties>
     <java.version>21</java.version>
     <spring-cloud.version>2024.0.0-RC1</spring-cloud.version>
-    <dockerPassword>${env.DOCKER_PASSWORD}</dockerPassword>
+    <!--<dockerPassword>${env.DOCKER_PASSWORD}</dockerPassword>-->
     <!--<dockerPassword>${dockerPassword}</dockerPassword>-->
   </properties>
 
@@ -44,7 +44,8 @@
           <docker>
             <publishRegistry>
                 <username>lordsecond</username>
-                <password>${dockerPassword}</password>
+                <!--<password>${dockerPassword}</password>-->
+                <password>${env.DOCKER_PASSWORD}</password>
             </publishRegistry>
           </docker>
           <excludes>

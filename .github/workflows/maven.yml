@@ -42,17 +42,21 @@ jobs:
 
     # Google Cloud login using Service Account Key
     - name: Google Cloud authentication
-      uses: google-github-actions/auth@v0
+      uses: google-github-actions/auth@v2
       with:
         credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
-    # Set GKE context
-    - name: Set GKE context
-      uses: google-github-actions/set-kubeconfig@v0
+    # Get GKE credentials
+    - name: Get GKE credentials
+      uses: google-github-actions/get-gke-credentials@v2
       with:
-        project_id: ${{ secrets.PROJECT_ID }}
-        cluster_name: ${{ secrets.GKE_CLUSTER }}
-        location: ${{ secrets.GKE_ZONE }}
+        cluster_name: 'fitplan'
+        location: 'europe-central2-a'
+
+    # Set Kubernetes context
+    - name: Set up kubectl
+      run: |
+        kubectl config use-context gke_${{ secrets.PROJECT_ID }}_europe-central2-a-fitplan
 
     # Deploy manifests to GKE
     - name: Deploy manifests to GKE

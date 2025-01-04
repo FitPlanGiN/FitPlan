@@ -31,44 +31,43 @@ jobs:
         server-password: MAVEN_PASSWORD
         
     - name: Building and pushing configserver
-      run: mvn package dockerfile:push --file configserver/pom.xml
+      run: mvn package dockerfile:push --file configserver/pom.xml -DdockerPassword=${{ secrets.DOCKER_PASSWORD }}
       env:
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME  }}
         MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD  }}
 
     - name: Building and pushing discoveryserver
-      run: mvn package dockerfile:push --file discoveryserver/pom.xml
+      run: mvn package dockerfile:push --file discoveryserver/pom.xml -DdockerPassword=${{ secrets.DOCKER_PASSWORD }}
       env:
         MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME  }}
         MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD  }}
 
     - name: Building and pushing gateway
-      run: mvn package dockerfile:push --file gateway/pom.xml
+      run: mvn package dockerfile:push --file gateway/pom.xml -DdockerPassword=${{ secrets.DOCKER_PASSWORD }}
       env:
         MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME  }}
         MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD  }}
 
     - name: Building and pushing exercise
-      run: mvn package dockerfile:push --file exercise/pom.xml
+      run: mvn package dockerfile:push --file exercise/pom.xml -DdockerPassword=${{ secrets.DOCKER_PASSWORD }}
       env:
         MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME  }}
         MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD  }}
 
     - name: Building and pushing workout
-      run: mvn package dockerfile:push --file workout/pom.xml
+      run: mvn package dockerfile:push --file workout/pom.xml -DdockerPassword=${{ secrets.DOCKER_PASSWORD }}
       env:
         MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME  }}
         MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD  }}
 
     - name: Building and pushing validation
-      run: mvn package dockerfile:push --file validation/pom.xml
+      run: mvn package dockerfile:push --file validation/pom.xml -DdockerPassword=${{ secrets.DOCKER_PASSWORD }}
       env:
         MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME  }}
         MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD  }}
 
     - name: Building and pushing notification
-      run: mvn package dockerfile:push --file notification/pom.xml
+      run: mvn package dockerfile:push --file notification/pom.xml -DdockerPassword=${{ secrets.DOCKER_PASSWORD }}
       env:
         MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME  }}
         MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD  }}

@@ -64,26 +64,26 @@ data:
 kind: Secret
 metadata:
   name: mysql-secrets
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: mysql-pv
-spec:
-  storageClassName: "standard"
-  accessModes:
-    - ReadWriteOnce
-  capacity:
-    storage: 1Gi
-  hostPath:
-    path: /data/mysql
+#---
+#apiVersion: v1
+#kind: PersistentVolume
+#metadata:
+#  name: mysql-pv
+#spec:
+#  storageClassName: "standard"
+#  accessModes:
+#    - ReadWriteOnce
+#  capacity:
+#    storage: 1Gi
+#  hostPath:
+#    path: /data/mysql
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pvc
 spec:
-  storageClassName: "standard"
+  #storageClassName: "standard"
   accessModes:
     - ReadWriteOnce
   resources:

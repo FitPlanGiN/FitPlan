@@ -23,9 +23,9 @@ spec:
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
-                  secretKeyRef:
-                    name: mysql-secrets
-                    key: mysql_root_password
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: mysql_root_password
           volumeMounts:
             - name: mysql-data
               mountPath: /var/lib/mysql
@@ -88,13 +88,12 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 10Gi
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-    name: mysql-initdb-conifg
+  name: mysql-initdb-conifg
 data:
   initdb.sql: |
     CREATE DATABASE IF NOT EXISTS workout;
-

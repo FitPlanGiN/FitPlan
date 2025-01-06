@@ -64,6 +64,12 @@ jobs:
      #   kubectl apply -f ./k8s/manifests/infrastructure
       #  kubectl apply -f ./k8s/manifests/applications
 
+    # Cleanup existing PVC and PV (if any)
+    - name: Cleanup MySQL PVC and PV
+      run: |
+        kubectl delete pvc mysql-pvc --ignore-not-found
+        kubectl delete pv mysql-pv --ignore-not-found
+
     # Create a Persistent Disk for MySQL
     - name: Create GCE Persistent Disk for MySQL
       run: |

@@ -73,7 +73,7 @@ jobs:
     # Create a Persistent Disk for MySQL
     #- name: Create GCE Persistent Disk for MySQL
      # run: |
-      #  gcloud compute disks create mysql-disk --size=1Gi --zone=europe-central2-a
+      #  gcloud compute disks create mysql-disk --size=10Gi --zone=europe-central2-a
 
     - name: Check if MySQL disk exists
       run: |

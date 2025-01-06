@@ -75,26 +75,26 @@ jobs:
      # run: |
       #  gcloud compute disks create mysql-disk --size=10Gi --zone=europe-central2-a
 
-    #- name: Check if MySQL disk exists
-     # run: |
-      #  if ! gcloud compute disks describe mysql-disk --zone=europe-central2-a > /dev/null 2>&1; then
-       #   gcloud compute disks create mysql-disk --size=10Gi --zone=europe-central2-a
-      #  else
-      #    echo "MySQL disk already exists, skipping creation."
-      #  fi
-
-    - name: Delete existing MySQL disk (if any)
+    - name: Check if MySQL disk exists
       run: |
-        if gcloud compute disks describe mysql-disk --zone=europe-central2-a > /dev/null 2>&1; then
-          gcloud compute disks delete mysql-disk --zone=europe-central2-a --quiet
+        if ! gcloud compute disks describe mysql-disk --zone=europe-central2-a > /dev/null 2>&1; then
+          gcloud compute disks create mysql-disk --size=10Gi --zone=europe-central2-a
         else
-          echo "MySQL disk not found, skipping deletion."
+          echo "MySQL disk already exists, skipping creation."
         fi
 
+    #- name: Delete existing MySQL disk (if any)
+      #run: |
+      #  if gcloud compute disks describe mysql-disk --zone=europe-central2-a > /dev/null 2>&1; then
+      #    gcloud compute disks delete mysql-disk --zone=europe-central2-a --quiet
+      #  else
+      #    echo "MySQL disk not found, skipping deletion."
+      #  fi
+
     
-    - name: Create MySQL disk
-      run: |
-        gcloud compute disks create mysql-disk --size=10Gi --zone=europe-central2-a
+   # - name: Create MySQL disk
+   #   run: |
+    #    gcloud compute disks create mysql-disk --size=10Gi --zone=europe-central2-a
 
     
     

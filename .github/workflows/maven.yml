@@ -67,7 +67,7 @@ jobs:
     # Deploy config server (must be deployed first in applications)
     - name: Deploy MySQL to GKE
       run: |
-        kubectl apply -f ./k8s/manifests/infrastructure/mysql.yml
+        kubectl apply -f ./k8s/manifests/infrastructure/mysql.yaml
         kubectl wait --for=condition=ready pod --selector=app=mysql --namespace=default --timeout=300s
 
     # Deploy config server (must be deployed first in applications)

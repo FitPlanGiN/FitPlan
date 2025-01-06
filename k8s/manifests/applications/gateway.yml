@@ -23,7 +23,7 @@ spec:
             - containerPort: 9000
           env:
             - name: SPRING_CONFIG_IMPORT
-              value: "optional:configserver:http://configserver:8888"
+              value: "optional:configserver:http://configserver.default.svc.cluster.local:8888"
             - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI
               valueFrom:
                 configMapKeyRef:

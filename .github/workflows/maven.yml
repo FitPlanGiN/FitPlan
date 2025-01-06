@@ -65,10 +65,10 @@ jobs:
       #  kubectl apply -f ./k8s/manifests/applications
 
     # Cleanup existing PVC and PV (if any)
-    - name: Cleanup MySQL PVC and PV
-      run: |
-        kubectl delete pvc mysql-pvc --ignore-not-found
-        kubectl delete pv mysql-pv --ignore-not-found
+    #- name: Cleanup MySQL PVC and PV
+     # run: |
+      #  kubectl delete pvc mysql-pvc --ignore-not-found
+       # kubectl delete pv mysql-pv --ignore-not-found
 
     # Create a Persistent Disk for MySQL
     #- name: Create GCE Persistent Disk for MySQL
@@ -114,21 +114,21 @@ jobs:
         kubectl wait --for=condition=ready pod --selector=app=keycloak-mysql --namespace=default --timeout=300s
       
     # Deploy infrastructure manifests first
-    - name: Deploy infrastructure to GKE
-      run: |
-        kubectl apply -f ./k8s/manifests/infrastructure
-        kubectl wait --for=condition=ready pod --all --namespace=default --timeout=900s
+    #- name: Deploy infrastructure to GKE
+    #  run: |
+    #    kubectl apply -f ./k8s/manifests/infrastructure
+    #    kubectl wait --for=condition=ready pod --all --namespace=default --timeout=900s
     
     # Deploy config server (must be deployed first in applications)
-    - name: Deploy Config Server to GKE
-      run: |
-        kubectl apply -f ./k8s/manifests/applications/configserver.yml
-        kubectl wait --for=condition=ready pod --selector=app=configserver --namespace=default --timeout=600s
+   # - name: Deploy Config Server to GKE
+    #  run: |
+    #    kubectl apply -f ./k8s/manifests/applications/configserver.yml
+    #    kubectl wait --for=condition=ready pod --selector=app=configserver --namespace=default --timeout=600s
     
     # Deploy the rest of the applications
-    - name: Deploy remaining applications to GKE
-      run: |
-        kubectl apply -f ./k8s/manifests/applications
+  #  - name: Deploy remaining applications to GKE
+   #   run: |
+     #   kubectl apply -f ./k8s/manifests/applications
         
         
 

@@ -64,6 +64,23 @@ jobs:
      #   kubectl apply -f ./k8s/manifests/infrastructure
       #  kubectl apply -f ./k8s/manifests/applications
 
+    # Deploy config server (must be deployed first in applications)
+    - name: Deploy MySQL to GKE
+      run: |
+        kubectl apply -f ./k8s/manifests/infrastructure/mysql
+        kubectl wait --for=condition=ready pod --selector=app=mysql --namespace=default --timeout=300s
+
+    # Deploy config server (must be deployed first in applications)
+    - name: Deploy MongoDB to GKE
+      run: |
+        kubectl apply -f ./k8s/manifests/infrastructure/mongodb
+        kubectl wait --for=condition=ready pod --selector=app=mongodb --namespace=default --timeout=300s
+
+    # Deploy config server (must be deployed first in applications)
+    - name: Deploy Kafka MySQL to GKE
+      run: |
+        kubectl apply -f ./k8s/manifests/infrastructure/kafka-mysql
+        kubectl wait --for=condition=ready pod --selector=app=kafka-mysql --namespace=default --timeout=300s
       
     # Deploy infrastructure manifests first
     - name: Deploy infrastructure to GKE

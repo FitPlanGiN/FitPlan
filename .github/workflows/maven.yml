@@ -118,10 +118,10 @@ jobs:
         kubectl apply -f ./k8s/manifests/infrastructure/zookeeper.yml
         kubectl wait --for=condition=ready pod --selector=app=zookeeper --namespace=default --timeout=300s
 
-    - name: Deploy Kafka to GKE
+    - name: Deploy Kafka broker to GKE
       run: |
         kubectl apply -f ./k8s/manifests/infrastructure/kafka.yml
-        kubectl wait --for=condition=ready pod --selector=app=kafka --namespace=default --timeout=300s
+        kubectl wait --for=condition=ready pod --selector=app=broker --namespace=default --timeout=300s
 
     - name: Deploy Kafka UI to GKE
       run: |

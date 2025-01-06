@@ -112,12 +112,53 @@ jobs:
       run: |
         kubectl apply -f ./k8s/manifests/infrastructure/keycloak-mysql.yml
         kubectl wait --for=condition=ready pod --selector=app=keycloak-mysql --namespace=default --timeout=300s
+
+    - name: Deploy Schema Registry to GKE
+      run: |
+        kubectl apply -f ./k8s/manifests/infrastructure/schema-registry.yml
+        kubectl wait --for=condition=ready pod --selector=app=schema-registry --namespace=default --timeout=300s
+
+    - name: Deploy Keycloak to GKE
+      run: |
+        kubectl apply -f ./k8s/manifests/infrastructure/keycloak.yml
+        kubectl wait --for=condition=ready pod --selector=app=keycloak --namespace=default --timeout=300s
+
+    - name: Deploy Kafka to GKE
+      run: |
+        kubectl apply -f ./k8s/manifests/infrastructure/kafka.yml
+        kubectl wait --for=condition=ready pod --selector=app=kafka --namespace=default --timeout=300s
+
+    - name: Deploy Kafka UI to GKE
+      run: |
+        kubectl apply -f ./k8s/manifests/infrastructure/kafka-ui.yml
+        kubectl wait --for=condition=ready pod --selector=app=kafka-ui --namespace=default --timeout=300s
+
+    - name: Deploy Loki to GKE
+      run: |
+        kubectl apply -f ./k8s/manifests/infrastructure/loki.yml
+        kubectl wait --for=condition=ready pod --selector=app=loki --namespace=default --timeout=300s
+
+    - name: Deploy Prometheus to GKE
+      run: |
+        kubectl apply -f ./k8s/manifests/infrastructure/prometheus.yml
+        kubectl wait --for=condition=ready pod --selector=app=prometheus --namespace=default --timeout=300s
+
+    - name: Deploy Tempo to GKE
+      run: |
+        kubectl apply -f ./k8s/manifests/infrastructure/tempo.yml
+        kubectl wait --for=condition=ready pod --selector=app=tempo --namespace=default --timeout=300s
+
+    - name: Deploy Zookeper to GKE
+      run: |
+        kubectl apply -f ./k8s/manifests/infrastructure/zookeper.yml
+        kubectl wait --for=condition=ready pod --selector=app=zookeper --namespace=default --timeout=300s
+
       
     # Deploy infrastructure manifests first
-    - name: Deploy infrastructure to GKE
-      run: |
-        kubectl apply -f ./k8s/manifests/infrastructure
-        kubectl wait --for=condition=ready pod --all --namespace=default --timeout=1000s
+    #- name: Deploy infrastructure to GKE
+     # run: |
+      #  kubectl apply -f ./k8s/manifests/infrastructure
+       # kubectl wait --for=condition=ready pod --all --namespace=default --timeout=1000s
     
     # Deploy config server (must be deployed first in applications)
     - name: Deploy Config Server to GKE

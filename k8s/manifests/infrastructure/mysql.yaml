@@ -74,7 +74,7 @@ metadata:
 #  accessModes:
 #    - ReadWriteOnce
 #  capacity:
-#    storage: 1Gi
+#    storage: 10Gi
 #  hostPath:
 #    path: /data/mysql
 ---

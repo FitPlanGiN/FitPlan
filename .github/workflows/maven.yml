@@ -64,6 +64,11 @@ jobs:
      #   kubectl apply -f ./k8s/manifests/infrastructure
       #  kubectl apply -f ./k8s/manifests/applications
 
+    # Create a Persistent Disk for MySQL
+    - name: Create GCE Persistent Disk for MySQL
+      run: |
+        gcloud compute disks create mysql-disk --size=1Gi --zone=europe-central2-a
+
     # Deploy config server (must be deployed first in applications)
     - name: Deploy MySQL to GKE
       run: |

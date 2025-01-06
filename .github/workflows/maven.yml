@@ -71,10 +71,19 @@ jobs:
         kubectl delete pv mysql-pv --ignore-not-found
 
     # Create a Persistent Disk for MySQL
-    - name: Create GCE Persistent Disk for MySQL
-      run: |
-        gcloud compute disks create mysql-disk --size=1Gi --zone=europe-central2-a
+    #- name: Create GCE Persistent Disk for MySQL
+     # run: |
+      #  gcloud compute disks create mysql-disk --size=1Gi --zone=europe-central2-a
 
+    - name: Check if MySQL disk exists
+      run: |
+        if ! gcloud compute disks describe mysql-disk --zone=europe-central2-a > /dev/null 2>&1; then
+          gcloud compute disks create mysql-disk --size=1Gi --zone=europe-central2-a
+        else
+          echo "MySQL disk already exists, skipping creation."
+        fi
+    
+    
     # Deploy config server (must be deployed first in applications)
     - name: Deploy MySQL to GKE
       run: |

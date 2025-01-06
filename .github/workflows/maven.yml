@@ -113,10 +113,10 @@ jobs:
         kubectl apply -f ./k8s/manifests/infrastructure/keycloak-mysql.yml
         kubectl wait --for=condition=ready pod --selector=app=keycloak-mysql --namespace=default --timeout=300s
 
-    - name: Deploy Zookeper to GKE
+    - name: Deploy Zookeeper to GKE
       run: |
-        kubectl apply -f ./k8s/manifests/infrastructure/zookeper.yml
-        kubectl wait --for=condition=ready pod --selector=app=zookeper --namespace=default --timeout=300s
+        kubectl apply -f ./k8s/manifests/infrastructure/zookeeper.yml
+        kubectl wait --for=condition=ready pod --selector=app=zookeeper --namespace=default --timeout=300s
 
     - name: Deploy Kafka to GKE
       run: |

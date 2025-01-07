@@ -46,6 +46,7 @@ kind: Service
 metadata:
   name: grafana
 spec:
+  type: NodePort
   selector:
     app: grafana
   ports:

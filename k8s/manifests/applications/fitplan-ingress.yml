@@ -16,35 +16,35 @@ spec:
     - http:
         paths:
           - path: /fitplanfrontend
-            pathType: ImplementationSpecific
+            pathType: Prefix
             backend:
               service:
                 name: fitplanfrontend
                 port:
                   number: 80
           - path: /keycloak
-            pathType: ImplementationSpecific
+            pathType: Prefix
             backend:
               service:
                 name: keycloak
                 port:
                   number: 8080
           - path: /grafana
-            pathType: ImplementationSpecific
+            pathType: Prefix
             backend:
               service:
                 name: grafana
                 port:
                   number: 3000
           - path: /kafkaui
-            pathType: ImplementationSpecific
+            pathType: Prefix
             backend:
               service:
                 name: kafka-ui
                 port:
                   number: 8080
           - path: /gateway
-            pathType: ImplementationSpecific
+            pathType: Prefix
             backend:
               service:
                 name: gateway

@@ -1,0 +1,99 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fitplan-ingress
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: "fitplan-external-ip"
+spec:
+  tls:
+  - secretName: fitplan-tls
+  rules:
+    - http:
+        paths:
+          - path: /frontend
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: fitplanfrontend
+                port:
+                  number: 80
+          - path: /keycloak
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: keycloak
+                port:
+                  number: 8080
+          - path: /grafana
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: grafana
+                port:
+                  number: 3000
+          - path: /kafkaui
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: kafka-ui
+                port:
+                  number: 8080 #8086?
+          - path: /gateway
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: gateway
+                port:
+                  number: 9000
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: fitplan-tls
+  namespace: default
+data:
+    tls.crt: "MIIDKTCCAhGgAwIBAgIUFssn/9FR5YKXvTbTLNlJeuxT/nIwDQYJKoZIhvcNAQEL
+  BQAwJDEUMBIGA1UEAwwLZml0cGxhbi5jb20xDDAKBgNVBAoMA0dpTjAeFw0yNTAx
+  MDcyMTE1MzdaFw0yNjAxMDcyMTE1MzdaMCQxFDASBgNVBAMMC2ZpdHBsYW4uY29t
+  MQwwCgYDVQQKDANHaU4wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCy
+  aN8tCtSm83MpwIBa7TjN6MSuhBscA2SQpFgsOGT7o2R/2aN+kFEKnCc44AScjs/h
+  AY+A5G3cV1Vy4ekOhrjeWJEaAWQhbIbd32jPjTA2wXH1FWLtrAqLoTD7kBXzhf+M
+  OAPy+mFagDdlQAZ7XhOHCzkIo8NBoTTDLWZ4W5OfktrNUGhXq0eKFXZaq0AXwrcK
+  0Au43aYeHwcnLIEy51GLsVOvJfle6bYthx8gRbHdGec/ipj5TUoZHZF4YuHD2zKb
+  FL8nNdJVvPjZUDqrMlTsRQEyWkWAB1Ak9ob05KXD1rQkcQkpXe3bFHFc+sqO72HU
+  JjeDp9l17W4JRU63lGTRAgMBAAGjUzBRMB0GA1UdDgQWBBQT6QpJbhLK7RWqFQgT
+  RfOSK1ST1zAfBgNVHSMEGDAWgBQT6QpJbhLK7RWqFQgTRfOSK1ST1zAPBgNVHRMB
+  Af8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQA6xWxEvXoZzFjOFZziAlCq7Bck
+  sij/X+Oc+xkiCTELC1w5hMJLm+lRv9IhcyrfyRXW4VK0rbLPIL4otxDM04T90Jbs
+  6Z38mr+mPmfNKZF3CqdS65NhtPbQy6HLDDHpFmXTXHqp90cKiAm237d8OuyluQEW
+  UaMOsFAEAv1NNLFx9nYtrj9qQ6CuS/wv/fJNO80wlsmvCQ3XBhu0JJ1i8M4DrE8/
+  J/8N/EOeWkc+m/apbWPc5BNxZRt5kAfi5E6az4iOsC8mcFv8HL3gQq7/G6yfK7xe
+  +pd3+WRVwA3Z/ijYWSKgL1xYMek6tKVBUbFacyJM/PPLCsltnrGDdsJhWRKF"
+    tls.key: "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCyaN8tCtSm83Mp
+  wIBa7TjN6MSuhBscA2SQpFgsOGT7o2R/2aN+kFEKnCc44AScjs/hAY+A5G3cV1Vy
+  4ekOhrjeWJEaAWQhbIbd32jPjTA2wXH1FWLtrAqLoTD7kBXzhf+MOAPy+mFagDdl
+  QAZ7XhOHCzkIo8NBoTTDLWZ4W5OfktrNUGhXq0eKFXZaq0AXwrcK0Au43aYeHwcn
+  LIEy51GLsVOvJfle6bYthx8gRbHdGec/ipj5TUoZHZF4YuHD2zKbFL8nNdJVvPjZ
+  UDqrMlTsRQEyWkWAB1Ak9ob05KXD1rQkcQkpXe3bFHFc+sqO72HUJjeDp9l17W4J
+  RU63lGTRAgMBAAECggEABAEkmT83/LNUL2i5uNDASKbj20Lt1Ngiprh5nix538gQ
+  FmqNJ+cXWpScsMMed2EhO1ysmukFqj9vlI+Lip7tgVgdkabcV3+3Gz3LfXUe0uvO
+  ogCj4s/MwMuSbOMUCw5D6SLMu+Rw0PY1yBkCzDwVVh+jXRVH6a4zn/nh5euwSZGZ
+  oPaNBSnZtHvIGrJkRQnqMka8n194HF3IzQV/+yEr7CDlfqpEwzPPn0f6qlIXCTXu
+  aiqGS++e2da4IlSrBXlh+VwYLe0uOdVVwpYwvRujOtNGHzp26MkxehN6xS6fo/no
+  evKoGhFmKWztRzXme4EugqmC6VVLtWX2U2uWqMGIkQKBgQDsjdfrSC+xaxF66i1r
+  ytewpVDqJzzU0y1LyHC4I9tRC1uk6KKrMRjExixOqRuTc7EU+VbLdMxkmXtDXpZq
+  pebqytNX3WcCCr3Q9CxJPr7I1esUOd2c61zXZQZ9XB7k5PeiaUdz6EczndmQxpqs
+  mncxJ7vD4gXUujPVfEG/ive+RQKBgQDBE2jUIDZYSC0gE6WDpin7v07xK0gmxU52
+  I69BNG/jCa1JN6ymgUBagKidmJ8BeGHAVQFtX0Z1hDvOLdjCnzBq1q7GetJxGG4V
+  oqtIYymGcBBR0kWkAyhssdlEIVGICDIAs3sx7imoK6MscO173IL6Oph4W3ZUUZ+K
+  CihEG1lrHQKBgB8ipFLRk4V0pD5baFMRxcX4XGgVdgpFKWcaIMv73DgUmKFiBVcn
+  BS2RL+/CjmCgD6TFFMl+vBBZq0G4x2+OGpC41YxxFcfNBiLkoJebbJ0emux0mVi4
+  GeY349zILUDPalC0LrVw0z5V/nbxzRX+1sVfh3VG4KGZSI1G55iAgA9JAoGARaIO
+  aJLFhslhHPR4+SXwdk7k1a3ac8EtLwZnqoiS4bsXuBRQPCzZXMqSBWSJ1Cnqd0cx
+  IJUAAFoUh6OZTXfEKoQKvKKHSyqYaU0loRHCZC3+dMP1QdWxuqHZzeyGTx1Fi2Mv
+  xy4x7+jtDJYd0FITGtQPMTkrT/WwKETJiOakNTECgYEAkcykwbnz9/XJ74eDLhB5
+  k0crNwtd2WcN3s2sEM6B9aLUM/fGiQ735YvasL5ab0l/8eUAUiNmsyXm4LCgi3O6
+  Q/B+nOuIMBSxkKA2gc8xbluV3D141aPTs8wAnzn0n1rkley2TLj+TAZFXadxUh4l
+  0KaTqIvlByxQYFzz+B/6hcI="
+type: kubernetes.io/tls

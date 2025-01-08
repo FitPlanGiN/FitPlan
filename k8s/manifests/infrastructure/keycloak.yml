@@ -19,6 +19,10 @@ spec:
             - containerPort: 8080
           args: ["start-dev", "--import-realm"]
           env:
+            - name: PROXY_ADDRESS_FORWARDING
+              value: "true"
+            - name: KEYCLOAK_PROXY
+              value: "edge"
             - name: DB_VENDOR
               valueFrom:
                 configMapKeyRef:

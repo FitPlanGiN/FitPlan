@@ -11,7 +11,7 @@ spec:
   rules:
     - http:
         paths:
-          - path: /frontend
+          - path: /fitplanfrontend
             pathType: ImplementationSpecific
             backend:
               service:

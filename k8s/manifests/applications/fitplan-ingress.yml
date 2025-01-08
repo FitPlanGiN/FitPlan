@@ -3,7 +3,8 @@ kind: Ingress
 metadata:
   name: fitplan-ingress
   annotations:
-    kubernetes.io/ingress.class: "gce"
+    #kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.class: "nginx"
     kubernetes.io/ingress.global-static-ip-name: "fitplan-external-ip"
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:

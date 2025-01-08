@@ -18,6 +18,10 @@ spec:
           ports:
             - containerPort: 3000
           env:
+            - name: GF_SERVER_ROOT_URL
+              value: "http://34.107.231.170/grafana/"
+            - name: GF_SERVER_SERVE_FROM_SUB_PATH
+              value: "true"
             - name: GF_AUTH_ANONYMOUS_ENABLED
               valueFrom:
                 configMapKeyRef:

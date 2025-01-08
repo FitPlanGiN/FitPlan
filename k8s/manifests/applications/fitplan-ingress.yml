@@ -3,11 +3,11 @@ kind: Ingress
 metadata:
   name: fitplan-ingress
   annotations:
-    #kubernetes.io/ingress.class: "gce"
-    kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/ingress.class: "gce"
+    #kubernetes.io/ingress.class: "nginx"
     kubernetes.io/ingress.global-static-ip-name: "fitplan-external-ip"
-    nginx.ingress.kubernetes.io/rewrite-target: /  # Rewrite path using the captured group
-    nginx.ingress.kubernetes.io/use-regex: "true"  # Enable regex matching in paths
+    #nginx.ingress.kubernetes.io/rewrite-target: /  # Rewrite path using the captured group
+    #nginx.ingress.kubernetes.io/use-regex: "true"  # Enable regex matching in paths
 spec:
   ingressClassName: nginx
   tls:
@@ -15,35 +15,35 @@ spec:
   rules:
     - http:
         paths:
-          - path: /fitplanfrontend(/|$)(.*)  # Capture everything after /fitplanfrontend
+          - path: /fitplanfrontend
             pathType: ImplementationSpecific
             backend:
               service:
                 name: fitplanfrontend
                 port:
                   number: 80
-          - path: /keycloak(/|$)(.*)
+          - path: /keycloak
             pathType: ImplementationSpecific
             backend:
               service:
                 name: keycloak
                 port:
                   number: 8080
-          - path: /grafana(/|$)(.*)
+          - path: /grafana
             pathType: ImplementationSpecific
             backend:
               service:
                 name: grafana
                 port:
                   number: 3000
-          - path: /kafkaui(/|$)(.*)
+          - path: /kafkaui
             pathType: ImplementationSpecific
             backend:
               service:
                 name: kafka-ui
                 port:
                   number: 8080
-          - path: /gateway(/|$)(.*)
+          - path: /gateway
             pathType: ImplementationSpecific
             backend:
               service:

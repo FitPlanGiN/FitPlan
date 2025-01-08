@@ -8,6 +8,7 @@ metadata:
     kubernetes.io/ingress.global-static-ip-name: "fitplan-external-ip"
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx
   tls:
   - secretName: fitplan-tls
   rules:

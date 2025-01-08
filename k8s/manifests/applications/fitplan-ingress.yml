@@ -6,7 +6,7 @@ metadata:
     #kubernetes.io/ingress.class: "gce"
     kubernetes.io/ingress.class: "nginx"
     kubernetes.io/ingress.global-static-ip-name: "fitplan-external-ip"
-    nginx.ingress.kubernetes.io/rewrite-target: /$2  # Rewrite path using the captured group
+    nginx.ingress.kubernetes.io/rewrite-target: /  # Rewrite path using the captured group
     nginx.ingress.kubernetes.io/use-regex: "true"  # Enable regex matching in paths
 spec:
   ingressClassName: nginx

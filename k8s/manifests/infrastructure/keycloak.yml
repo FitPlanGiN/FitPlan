@@ -35,6 +35,8 @@ spec:
               value: "false"
             #- name: KC_HOSTNAME
              # value: "keycloak.default.svc.cluster.local"
+            - name: KC_HOSTNAME
+              value: "localhost:8080"
             - name: DB_VENDOR
               valueFrom:
                 configMapKeyRef:

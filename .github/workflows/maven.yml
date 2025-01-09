@@ -27,18 +27,18 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    #- name: Build and push images using spring-boot:build-image
-      #env:
-       # DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-     # run: |
-       # mvn clean spring-boot:build-image -DskipTests
-
-    - name: Building and pushing fitplanfrontend
+    - name: Build and push images using spring-boot:build-image
+      env:
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest .
-        echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-        docker push ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest
-      working-directory: fitplanfrontend
+        mvn clean spring-boot:build-image -DskipTests
+
+    #- name: Building and pushing fitplanfrontend
+     # run: |
+      #  docker build -t ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest .
+      #  echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      #  docker push ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest
+    #  working-directory: fitplanfrontend
 
     # Google Cloud login using Service Account Key
     - name: Google Cloud authentication

@@ -77,11 +77,6 @@ spec:
                   name: keycloak-secrets
             - name: KEYCLOAK_HTTPS_KEYSTORE_FILE
               value: "/etc/x509/https/tls.crt"  # Path to the certificate inside the container
-            - name: KEYCLOAK_HTTPS_KEYSTORE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: fitplan-tls  # Secret containing the TLS cert and key
-                  key: tls-password
           volumeMounts:
             - name: keycloak-realm
               mountPath: /opt/keycloak/data/import

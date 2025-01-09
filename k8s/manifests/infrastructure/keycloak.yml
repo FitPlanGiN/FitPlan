@@ -16,7 +16,8 @@ spec:
         - name: keycloak
           image: quay.io/keycloak/keycloak:24.0.1
           ports:
-            - containerPort: 8080
+            - containerPort: 8080  # HTTP port
+            - containerPort: 8443  # HTTPS port
           args: ["start-dev", "--import-realm"]
           env:
             - name: KC_HTTP_ONLY_COOKIE
@@ -24,7 +25,7 @@ spec:
             - name: KEYCLOAK_COOKIE_SAMESITE
               value: "None"
             - name: KEYCLOAK_COOKIE_SECURE
-              value: "false"  # Set to "true" if using HTTPS
+              value: "true"  # Set to "true" if using HTTPS
             - name: PROXY_ADDRESS_FORWARDING
               value: "true"
             - name: KEYCLOAK_PROXY
@@ -33,10 +34,12 @@ spec:
             #  value: "http://<NodeIP>:<NodePort>/auth"  # Replace with actual IP and port
             - name: KC_HOSTNAME_STRICT
               value: "false"
-            #- name: KC_HOSTNAME
-             # value: "keycloak.default.svc.cluster.local"
             - name: KC_HOSTNAME
-              value: "localhost:8080"
+              value: "keycloak.default.svc.cluster.local"
+            - name: KEYCLOAK_FRONTEND_URL
+              value: "https://keycloak.default.svc.cluster.local:8443/auth"
+            #- name: KC_HOSTNAME
+            #  value: "localhost:8080"
             - name: DB_VENDOR
               valueFrom:
                 configMapKeyRef:
@@ -72,13 +75,26 @@ spec:
                 secretKeyRef:
                   key: KEYCLOAK_ADMIN_PASSWORD
                   name: keycloak-secrets
+            - name: KEYCLOAK_HTTPS_KEYSTORE_FILE
+              value: "/etc/x509/https/tls.crt"  # Path to the certificate inside the container
+            - name: KEYCLOAK_HTTPS_KEYSTORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: fitplan-tls  # Secret containing the TLS cert and key
+                  key: tls-password
           volumeMounts:
             - name: keycloak-realm
               mountPath: /opt/keycloak/data/import
+            - name: tls-secret
+              mountPath: /etc/x509/https  # Mount TLS secret here
+              readOnly: true
       volumes:
         - name: keycloak-realm
           configMap:
             name: keycloak-realm-config
+        - name: tls-secret
+          secret:
+            secretName: fitplan-tls
 ---
 apiVersion: v1
 kind: Service
@@ -90,8 +106,8 @@ spec:
     app: keycloak
   ports:
     - protocol: TCP
-      port: 8080
-      targetPort: 8080
+      port: 8443  # Change to 8443 for HTTPS
+      targetPort: 8443
 ---
 apiVersion: v1
 kind: Service

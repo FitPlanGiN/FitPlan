@@ -25,6 +25,11 @@ spec:
             #    configMapKeyRef:
             #      key: SPRING_DATASOURCE_URL
             #      name: inventory-service-config
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: openai-secret
+                  key: OPENAI_API_KEY
             - name: LOKI_URL
               valueFrom:
                 configMapKeyRef:
@@ -70,3 +75,11 @@ metadata:
   name: validation-config
 #data:
   #SPRING_DATASOURCE_URL: "jdbc:mysql://mysql.default.svc.cluster.local:3306/inventory_service"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: openai-secret
+type: Opaque
+data:
+  OPENAI_API_KEY: c2stcHJvai13RXVFNnl4a0FUZ2ZWYUYzZHNKUWFfNFNxVENKYUdOdVVfcEVvVmExM1BBb2h6c0hxeFBuX3JsWHhFZUZtc1R4RnNNN0NORWVfVVQzQmxia0ZKdlNhRmk1ZWtZTG05LUFJOEpabmxYbnhWcnYxSFNzTExOcTllY2gyV3JnZzlranVVRERCbEduQjltd0phaHhncGs5eEUyRll0d0E=

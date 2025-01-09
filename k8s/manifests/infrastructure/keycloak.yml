@@ -31,6 +31,8 @@ spec:
             #  value: "http://<NodeIP>:<NodePort>/auth"  # Replace with actual IP and port
             - name: KC_HOSTNAME_STRICT
               value: "false"
+            - name: KC_HOSTNAME
+              value: "keycloak.default.svc.cluster.local"
             - name: DB_VENDOR
               valueFrom:
                 configMapKeyRef:

@@ -19,6 +19,10 @@ spec:
             - containerPort: 8080
           args: ["start-dev", "--import-realm"]
           env:
+            - name: KEYCLOAK_COOKIE_SAMESITE
+              value: "None"
+            - name: KEYCLOAK_COOKIE_SECURE
+              value: "false"  # Set to "true" if using HTTPS
             - name: PROXY_ADDRESS_FORWARDING
               value: "true"
             - name: KEYCLOAK_PROXY

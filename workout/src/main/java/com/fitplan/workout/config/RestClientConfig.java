@@ -34,8 +34,8 @@ public class RestClientConfig {
     private ClientHttpRequestFactory getClientRequestFactory() {
         // Uporabi SimpleClientHttpRequestFactory za nastavljanje timeoutov
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-        factory.setConnectTimeout((int) Duration.ofSeconds(3).toMillis()); // Povezovalni timeout
-        factory.setReadTimeout((int) Duration.ofSeconds(3).toMillis());   // Bralni timeout
+        factory.setConnectTimeout((int) Duration.ofSeconds(20).toMillis()); // Povezovalni timeout
+        factory.setReadTimeout((int) Duration.ofSeconds(40).toMillis());   // Bralni timeout
         return factory;
     }
 }

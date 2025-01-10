@@ -742,7 +742,9 @@ data:
           "publicClient": true,
           "frontchannelLogout": false,
           "protocol": "openid-connect",
-          "attributes": {},
+          "attributes": {
+            "post.logout.redirect.uris": "+"
+          },
           "authenticationFlowBindingOverrides": {},
           "fullScopeAllowed": false,
           "nodeReRegistrationTimeout": 0,
@@ -773,26 +775,29 @@ data:
           "alwaysDisplayInConsole": false,
           "clientAuthenticatorType": "client-secret",
           "redirectUris": [
-            "http://fitplanfrontend.default.svc.cluster.local:4200"
+            "http://fitplanfrontend.default.svc.cluster.local:80"
           ],
           "webOrigins": [
-            "*"
+            "http://34.118.122.132:30857",
+            "*",
+            "http://34.107.231.170"
           ],
           "notBefore": 0,
           "bearerOnly": false,
           "consentRequired": false,
           "standardFlowEnabled": true,
           "implicitFlowEnabled": false,
-          "directAccessGrantsEnabled": false,
+          "directAccessGrantsEnabled": true,
           "serviceAccountsEnabled": false,
           "publicClient": true,
           "frontchannelLogout": true,
           "protocol": "openid-connect",
           "attributes": {
             "oidc.ciba.grant.enabled": "false",
+            "backchannel.logout.session.required": "true",
+            "post.logout.redirect.uris": "+",
             "oauth2.device.authorization.grant.enabled": "false",
             "display.on.consent.screen": "false",
-            "backchannel.logout.session.required": "true",
             "backchannel.logout.revoke.offline.tokens": "false"
           },
           "authenticationFlowBindingOverrides": {},
@@ -832,7 +837,9 @@ data:
           "publicClient": false,
           "frontchannelLogout": false,
           "protocol": "openid-connect",
-          "attributes": {},
+          "attributes": {
+            "post.logout.redirect.uris": "+"
+          },
           "authenticationFlowBindingOverrides": {},
           "fullScopeAllowed": false,
           "nodeReRegistrationTimeout": 0,
@@ -870,7 +877,9 @@ data:
           "publicClient": false,
           "frontchannelLogout": false,
           "protocol": "openid-connect",
-          "attributes": {},
+          "attributes": {
+            "post.logout.redirect.uris": "+"
+          },
           "authenticationFlowBindingOverrides": {},
           "fullScopeAllowed": false,
           "nodeReRegistrationTimeout": 0,
@@ -984,9 +993,10 @@ data:
           "protocol": "openid-connect",
           "attributes": {
             "oidc.ciba.grant.enabled": "false",
-            "oauth2.device.authorization.grant.enabled": "false",
             "client.secret.creation.time": "1736507773",
             "backchannel.logout.session.required": "true",
+            "post.logout.redirect.uris": "+",
+            "oauth2.device.authorization.grant.enabled": "false",
             "backchannel.logout.revoke.offline.tokens": "false"
           },
           "authenticationFlowBindingOverrides": {},
@@ -1002,6 +1012,7 @@ data:
               "config": {
                 "user.session.note": "clientHost",
                 "introspection.token.claim": "true",
+                "userinfo.token.claim": "true",
                 "id.token.claim": "true",
                 "access.token.claim": "true",
                 "claim.name": "clientHost",
@@ -1017,6 +1028,7 @@ data:
               "config": {
                 "user.session.note": "clientAddress",
                 "introspection.token.claim": "true",
+                "userinfo.token.claim": "true",
                 "id.token.claim": "true",
                 "access.token.claim": "true",
                 "claim.name": "clientAddress",
@@ -1032,6 +1044,7 @@ data:
               "config": {
                 "user.session.note": "client_id",
                 "introspection.token.claim": "true",
+                "userinfo.token.claim": "true",
                 "id.token.claim": "true",
                 "access.token.claim": "true",
                 "claim.name": "client_id",
@@ -1116,7 +1129,8 @@ data:
               "config": {
                 "id.token.claim": "true",
                 "introspection.token.claim": "true",
-                "access.token.claim": "true"
+                "access.token.claim": "true",
+                "userinfo.token.claim": "true"
               }
             }
           ]
@@ -1278,6 +1292,7 @@ data:
               "config": {
                 "introspection.token.claim": "true",
                 "multivalued": "true",
+                "userinfo.token.claim": "true",
                 "user.attribute": "foo",
                 "id.token.claim": "true",
                 "access.token.claim": "true",
@@ -1614,7 +1629,7 @@ data:
         "xFrameOptions": "SAMEORIGIN",
         "contentSecurityPolicy": "frame-src 'self'; frame-ancestors 'self'; object-src 'none';",
         "xXSSProtection": "1; mode=block",
-        "strictTransportSecurity": "max-age=31536000; includeSubDomains"
+        "strictTransportSecurity": "Disabled"
       },
       "smtpServer": {},
       "eventsEnabled": false,
@@ -1636,14 +1651,14 @@ data:
             "subComponents": {},
             "config": {
               "allowed-protocol-mapper-types": [
-                "oidc-address-mapper",
-                "oidc-full-name-mapper",
-                "saml-user-property-mapper",
+                "oidc-usermodel-property-mapper",
+                "saml-user-attribute-mapper",
                 "oidc-usermodel-attribute-mapper",
                 "oidc-sha256-pairwise-sub-mapper",
-                "saml-user-attribute-mapper",
-                "oidc-usermodel-property-mapper",
-                "saml-role-list-mapper"
+                "saml-role-list-mapper",
+                "oidc-address-mapper",
+                "oidc-full-name-mapper",
+                "saml-user-property-mapper"
               ]
             }
           },
@@ -1722,14 +1737,14 @@ data:
             "subComponents": {},
             "config": {
               "allowed-protocol-mapper-types": [
-                "saml-role-list-mapper",
-                "oidc-usermodel-attribute-mapper",
-                "oidc-address-mapper",
-                "saml-user-property-mapper",
                 "oidc-usermodel-property-mapper",
                 "oidc-sha256-pairwise-sub-mapper",
+                "saml-user-property-mapper",
+                "oidc-address-mapper",
+                "oidc-full-name-mapper",
+                "saml-role-list-mapper",
                 "saml-user-attribute-mapper",
-                "oidc-full-name-mapper"
+                "oidc-usermodel-attribute-mapper"
               ]
             }
           }
@@ -2410,8 +2425,8 @@ data:
       "attributes": {
         "cibaBackchannelTokenDeliveryMode": "poll",
         "cibaAuthRequestedUserHint": "login_hint",
-        "oauth2DevicePollingInterval": "5",
         "clientOfflineSessionMaxLifespan": "0",
+        "oauth2DevicePollingInterval": "5",
         "clientSessionIdleTimeout": "0",
         "clientOfflineSessionIdleTimeout": "0",
         "cibaInterval": "5",

@@ -46,16 +46,16 @@
                 <username>lordsecond</username>
                 <!--<password>${dockerPassword}</password>-->
                 <password>${env.DOCKER_PASSWORD}</password>
-            </publishRegistry>
-          </docker>
-          <excludes>
-            <exclude>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-            </exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+          </publishRegistry>
+        </docker>
+        <excludes>
+          <exclude>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+          </exclude>
+        </excludes>
+      </configuration>
+    </plugin>
+  </plugins>
+</build>
 </project>

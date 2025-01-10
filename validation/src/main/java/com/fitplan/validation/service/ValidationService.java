@@ -11,12 +11,16 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class ValidationService {
 
     private final RestTemplate restTemplate;
@@ -27,11 +31,11 @@ public class ValidationService {
     @Value("${openai.api.key}")
     private String apiKey;
 
-    public ValidationService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
 
     public String askAI(String name, String description) {
+
+        log.info("verzija4 Received askAI request for workout with name: {} and description: {}", name, description);
+
         // Ustvari prompt za AI
         String prompt = "Please provide feedback on the following workout:\n" +
                 "Workout Name: " + name + "\n" +
@@ -39,27 +43,44 @@ public class ValidationService {
 
         // Ustvari telo zahteve za OpenAI API
         Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("model", "gpt-4");  // Lahko uporabiš tudi gpt-3.5-turbo
-        requestBody.put("messages", new Object[]{
+        requestBody.put("model", "gpt-4o-mini"); // Use correct model, ensure it's available
+        requestBody.put("messages", List.of(
                 Map.of("role", "user", "content", prompt)
-        });
+        ));
         requestBody.put("temperature", 0.7);
 
-        // Nastavi glave zahteve
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + apiKey);
         headers.set("Content-Type", "application/json");
 
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
-        // Pošlji zahtevek ChatGPT-ju in pridobi odgovor
-        ResponseEntity<Map> response = restTemplate.exchange(apiUrl, HttpMethod.POST, requestEntity, Map.class);
+        log.info("Poslali bomo na API");
 
-        // Izlušči odgovor iz polja 'choices'
-        Map<String, Object> choices = (Map<String, Object>) ((List<Object>) response.getBody().get("choices")).get(0);
-        String aiResponse = (String) ((Map<String, Object>) choices.get("message")).get("content");
+        try {
+            // Pošlji zahtevek ChatGPT-ju in pridobi odgovor
+            ResponseEntity<Map> response = restTemplate.exchange(apiUrl, HttpMethod.POST, requestEntity, Map.class);
 
-        return aiResponse;
+            log.info("Poslali smo in čakamo");
+
+            // Preveri, ali je odgovor prazen ali vsebuje napako
+            if (response.getBody() == null) {
+                log.info("Error: No response from AI");
+                return "Error: No response from AI";
+            }
+
+            // Izlušči odgovor iz polja 'choices' in 'message.content'
+            List<Map<String, Object>> choices = (List<Map<String, Object>>) response.getBody().get("choices");
+            Map<String, Object> message = (Map<String, Object>) choices.get(0).get("message");
+            String aiResponse = (String) message.get("content");
+
+            log.info(aiResponse);
+
+            return aiResponse;
+        } catch (Exception e) {
+            log.info("Error: " + e.getMessage());
+            return "Error: " + e.getMessage();
+        }
     }
 }
 

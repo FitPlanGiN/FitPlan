@@ -12,10 +12,18 @@ export class ExerciseService {
   }
 
   getExercises(): Observable<Array<Exercise>> {
+    return this.httpClient.get<Array<Exercise>>('http://34.118.122.132:31823/api/exercise');
+  }
+
+  createExercise(exercise: Exercise): Observable<Exercise> {
+    return this.httpClient.post<Exercise>('http://34.118.122.132:31823/api/exercise', exercise);
+  }
+
+  /*getExercises(): Observable<Array<Exercise>> {
     return this.httpClient.get<Array<Exercise>>('http://localhost:9000/api/exercise');
   }
 
   createExercise(exercise: Exercise): Observable<Exercise> {
     return this.httpClient.post<Exercise>('http://localhost:9000/api/exercise', exercise);
-  }
+  }*/
 }

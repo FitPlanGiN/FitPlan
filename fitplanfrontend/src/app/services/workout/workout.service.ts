@@ -19,6 +19,7 @@ export class WorkoutService {
       }),
       responseType: 'text' as 'json'
     };
-    return this.httpClient.post<string>('http://localhost:9000/api/workout', workout, httpOptions);
+    return this.httpClient.post<string>('http://34.118.122.132:31823/api/workout', workout, httpOptions);
+    //return this.httpClient.post<string>('http://localhost:9000/api/workout', workout, httpOptions);
   }
 }

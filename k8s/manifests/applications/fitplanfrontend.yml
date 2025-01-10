@@ -33,9 +33,23 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: fitplanfrontend
+  name: fitplanfrontend-nodeport
 spec:
   type: NodePort
+  selector:
+    app: fitplanfrontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  sessionAffinity: ClientIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fitplanfrontend
+spec:
+  type: ClusterIP
   selector:
     app: fitplanfrontend
   ports:

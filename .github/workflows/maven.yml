@@ -58,17 +58,25 @@ jobs:
             echo "MySQL disk already exists, skipping creation."
           fi
 
-      # Deploy common-config
+      # Uninstall common-config if it exists
+      - name: Uninstall common-config
+        run: |
+          helm uninstall common-config || echo "common-config release does not exist, skipping uninstall."
+
+      # Install common-config
       - name: Deploy common-config
         run: |
-          helm install common-config ./fitplan-helm/charts/common-config \
-            --replace --wait
+          helm install common-config ./fitplan-helm/charts/common-config --replace --wait
 
-      # Deploy configserver
+      # Uninstall configserver if it exists
+      - name: Uninstall configserver
+        run: |
+          helm uninstall configserver || echo "configserver release does not exist, skipping uninstall."
+
+      # Install configserver
       - name: Deploy configserver
         run: |
-          helm install configserver ./fitplan-helm/charts/configserver \
-            --replace --wait
+          helm install configserver ./fitplan-helm/charts/configserver --replace --wait
 
       # Deploy other services
       - name: Deploy other services

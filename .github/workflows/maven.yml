@@ -70,15 +70,6 @@ jobs:
           helm upgrade --install configserver ./charts/configserver \
             --wait
 
-      # Deploy chart
-      - name: Deploy validation chart
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: |
-          helm upgrade --install validation ./charts/validation \
-            --set secrets.openaiApiKey=$OPENAI_API_KEY \
-            --wait
-
       # Deploy other services
       - name: Deploy other services
         run: |

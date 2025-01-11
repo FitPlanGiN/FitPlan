@@ -81,7 +81,7 @@ jobs:
       # Deploy other services
       - name: Deploy other services
         run: |
-          helm install fitplan-helm . \
+          helm install fitplan-helm ./fitplan-helm \
             --dependency-update \
             --replace --wait
 

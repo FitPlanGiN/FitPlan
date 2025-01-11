@@ -266,17 +266,25 @@ jobs:
         run: |
           helm upgrade --install workout ./fitplan-helm/charts/workout --wait
 
-      - name: Run curl test
-        run: |
-          # Delete the pod if it exists
-          kubectl delete pod curl-test --ignore-not-found
-          # Run the curl test pod
-          kubectl run curl-test --image=curlimages/curl:latest --restart=Never -- \
-            curl -f http://34.107.231.170/ || (echo "Connection to fitplanfrontend failed" && exit 1)
+      #- name: Run curl test
+      #  run: |
+       #   # Delete the pod if it exists
+       #   kubectl delete pod curl-test --ignore-not-found
+        #  # Run the curl test pod
+         # kubectl run curl-test --image=curlimages/curl:latest --restart=Never -- \
+          #  curl -f http://34.107.231.170/ || (echo "Connection to fitplanfrontend failed" && exit 1)
           # Fetch logs to verify the output
-          kubectl logs curl-test
+         # kubectl logs curl-test
           # Clean up the test pod
-          kubectl delete pod curl-test --ignore-not-found
+        #  kubectl delete pod curl-test --ignore-not-found
+
+      - name: Test FitPlan Frontend via Public IP
+        run: |
+          echo "Testing FitPlan frontend at http://34.107.231.170/"
+          curl -v --fail http://34.107.231.170/ \
+            && echo "FitPlan frontend is reachable!" \
+            || (echo "FitPlan frontend check failed" && exit 1)
+
           
       #- name: Run connection test to fitplanfrontend
        # run: |

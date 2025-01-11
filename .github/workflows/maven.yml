@@ -19,18 +19,18 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-    #  - name: Build and push images using spring-boot:build-image
-       # env:
-       #   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      #  run: |
-       #   mvn clean spring-boot:build-image -DskipTests
-  
-      #- name: Building and pushing fitplanfrontend
-       # run: |
-        #  docker build --no-cache -t ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest .
-         # echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-         # docker push ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest
-       # working-directory: fitplanfrontend          
+          #  - name: Build and push images using spring-boot:build-image
+          # env:
+          #   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          #  run: |
+          #   mvn clean spring-boot:build-image -DskipTests
+
+          #- name: Building and pushing fitplanfrontend
+          # run: |
+          #  docker build --no-cache -t ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest .
+          # echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+          # docker push ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest
+      # working-directory: fitplanfrontend
 
       - name: Google Cloud authentication
         uses: google-github-actions/auth@v2
@@ -51,49 +51,49 @@ jobs:
         uses: azure/setup-helm@v3
 
 
-    #- name: Create GCE Persistent Disk for MySQL
-     # run: |
+      #- name: Create GCE Persistent Disk for MySQL
+      # run: |
       #  gcloud compute disks create mysql-disk --size=10Gi --zone=europe-central2-a
 
 
 
       # Remove conflicting secrets (if necessary)
-    #  - name: Remove existing secrets
-       # run: |
-       #   kubectl delete secret fitplan-helm-secrets --ignore-not-found
+      #  - name: Remove existing secrets
+      # run: |
+      #   kubectl delete secret fitplan-helm-secrets --ignore-not-found
 
-      - name: Uninstall existing common-config
-        run: |
-          helm uninstall common-config || echo "common-config release does not exist."
+      #- name: Uninstall existing common-config
+      #  run: |
+      #    helm uninstall common-config || echo "common-config release does not exist."
 
       - name: Deploy common-config
         run: |
-          helm install common-config ./fitplan-helm/charts/common-config --wait
+          helm upgrade --install common-config ./fitplan-helm/charts/common-config --wait
 
-      - name: Uninstall existing configserver
-        run: |
-          helm uninstall configserver || echo "configserver release does not exist."
+      #- name: Uninstall existing configserver
+      #  run: |
+      #    helm uninstall configserver || echo "configserver release does not exist."
 
       - name: Deploy configserver
         run: |
-          helm install configserver ./fitplan-helm/charts/configserver --wait
+          helm upgrade --install configserver ./fitplan-helm/charts/configserver --wait
 
-      - name: Uninstall existing mysql
-        run: |
-          helm uninstall mysql || echo "mysql release does not exist."
+      #- name: Uninstall existing mysql
+      #  run: |
+      #    helm uninstall mysql || echo "mysql release does not exist."
 
-      - name: Cleanup MySQL PVC and PV
-        run: |
-          kubectl delete pvc mysql-pvc --ignore-not-found
-          kubectl delete pv mysql-pv --ignore-not-found
+      #- name: Cleanup MySQL PVC and PV
+      #  run: |
+      #    kubectl delete pvc mysql-pvc --ignore-not-found
+      #    kubectl delete pv mysql-pv --ignore-not-found
 
-      - name: Delete existing MySQL disk (if any)
-        run: |
-          if gcloud compute disks describe mysql-disk --zone=europe-central2-a > /dev/null 2>&1; then
-            gcloud compute disks delete mysql-disk --zone=europe-central2-a --quiet
-          else
-            echo "MySQL disk not found, skipping deletion."
-          fi
+      #- name: Delete existing MySQL disk (if any)
+      #  run: |
+      #    if gcloud compute disks describe mysql-disk --zone=europe-central2-a > /dev/null 2>&1; then
+      #      gcloud compute disks delete mysql-disk --zone=europe-central2-a --quiet
+      #    else
+      #      echo "MySQL disk not found, skipping deletion."
+      #    fi
 
       - name: Check if MySQL disk exists
         run: |
@@ -105,167 +105,167 @@ jobs:
 
       - name: Deploy mysql
         run: |
-          helm install mysql ./fitplan-helm/charts/mysql --wait
+          helm upgrade --install mysql ./fitplan-helm/charts/mysql --wait
 
-      - name: Uninstall existing mongodb
-        run: |
-          helm uninstall mongodb || echo "mongodb release does not exist."
+      #- name: Uninstall existing mongodb
+      #  run: |
+      #    helm uninstall mongodb || echo "mongodb release does not exist."
 
-      - name: Cleanup existing MongoDB PVC and PV
-        run: |
-          kubectl delete pvc mongodb-pvc --ignore-not-found
-          kubectl delete pv mongodb-pv --ignore-not-found
+      #- name: Cleanup existing MongoDB PVC and PV
+      #  run: |
+      #    kubectl delete pvc mongodb-pvc --ignore-not-found
+      #    kubectl delete pv mongodb-pv --ignore-not-found
 
       - name: Deploy mongodb
         run: |
-          helm install mongodb ./fitplan-helm/charts/mongodb --wait
+          helm upgrade --install mongodb ./fitplan-helm/charts/mongodb --wait
 
-      - name: Uninstall existing keycloak-mysql
-        run: |
-          helm uninstall keycloak-mysql || echo "keycloak-mysql release does not exist."
+      #- name: Uninstall existing keycloak-mysql
+      #  run: |
+      #    helm uninstall keycloak-mysql || echo "keycloak-mysql release does not exist."
 
-      - name: Cleanup Keycloak-MySQL PVC and PV
-        run: |
-          kubectl delete pvc keycloak-mysql-pvc --ignore-not-found
-          kubectl delete pv keycloak-mysql-pv --ignore-not-found
+      #- name: Cleanup Keycloak-MySQL PVC and PV
+      #  run: |
+      #    kubectl delete pvc keycloak-mysql-pvc --ignore-not-found
+      #    kubectl delete pv keycloak-mysql-pv --ignore-not-found
 
       - name: Deploy keycloak-mysql
         run: |
-          helm install keycloak-mysql ./fitplan-helm/charts/keycloak-mysql --wait
+          helm upgrade --install keycloak-mysql ./fitplan-helm/charts/keycloak-mysql --wait
 
-      - name: Uninstall existing zookeeper
-        run: |
-          helm uninstall zookeeper || echo "zookeeper release does not exist."
+      #- name: Uninstall existing zookeeper
+      #  run: |
+      #    helm uninstall zookeeper || echo "zookeeper release does not exist."
 
       - name: Deploy zookeeper
         run: |
-          helm install zookeeper ./fitplan-helm/charts/zookeeper --wait
+          helm upgrade --install zookeeper ./fitplan-helm/charts/zookeeper --wait
 
-      - name: Uninstall existing broker
-        run: |
-          helm uninstall broker || echo "broker release does not exist."
+      #- name: Uninstall existing broker
+      #  run: |
+      #    helm uninstall broker || echo "broker release does not exist."
 
       - name: Deploy broker
         run: |
-          helm install broker ./fitplan-helm/charts/broker --wait
+          helm upgrade --install broker ./fitplan-helm/charts/broker --wait
 
-      - name: Uninstall existing kafka-ui
-        run: |
-          helm uninstall kafka-ui || echo "kafka-ui release does not exist."
+      #- name: Uninstall existing kafka-ui
+      #  run: |
+      #    helm uninstall kafka-ui || echo "kafka-ui release does not exist."
 
       - name: Deploy kafka-ui
         run: |
-          helm install kafka-ui ./fitplan-helm/charts/kafka-ui --wait
+          helm upgrade --install kafka-ui ./fitplan-helm/charts/kafka-ui --wait
 
-      - name: Uninstall existing schema-registry
-        run: |
-          helm uninstall schema-registry || echo "schema-registry release does not exist."
+      #- name: Uninstall existing schema-registry
+      #  run: |
+      #    helm uninstall schema-registry || echo "schema-registry release does not exist."
 
       - name: Deploy schema-registry
         run: |
-          helm install schema-registry ./fitplan-helm/charts/schema-registry --wait
+          helm upgrade --install schema-registry ./fitplan-helm/charts/schema-registry --wait
 
-      - name: Uninstall existing keycloak
-        run: |
-          helm uninstall keycloak || echo "keycloak release does not exist."
+      #- name: Uninstall existing keycloak
+      #  run: |
+      #    helm uninstall keycloak || echo "keycloak release does not exist."
 
       - name: Deploy keycloak
         run: |
-          helm install keycloak ./fitplan-helm/charts/keycloak --wait
+          helm upgrade --install keycloak ./fitplan-helm/charts/keycloak --wait
 
-      - name: Uninstall existing prometheus
-        run: |
-          helm uninstall prometheus || echo "prometheus release does not exist."
+      #- name: Uninstall existing prometheus
+      #  run: |
+      #    helm uninstall prometheus || echo "prometheus release does not exist."
 
       - name: Deploy prometheus
         run: |
-          helm install prometheus ./fitplan-helm/charts/prometheus --wait
+          helm upgrade --install prometheus ./fitplan-helm/charts/prometheus --wait
 
-      - name: Uninstall existing loki
-        run: |
-          helm uninstall loki || echo "loki release does not exist."
+      #- name: Uninstall existing loki
+      #  run: |
+      #    helm uninstall loki || echo "loki release does not exist."
 
       - name: Deploy loki
         run: |
-          helm install loki ./fitplan-helm/charts/loki --wait
+          helm upgrade --install loki ./fitplan-helm/charts/loki --wait
 
-      - name: Uninstall existing tempo
-        run: |
-          helm uninstall tempo || echo "tempo release does not exist."
+      #- name: Uninstall existing tempo
+      #  run: |
+      #    helm uninstall tempo || echo "tempo release does not exist."
 
-      - name: Cleanup Tempo PVC and PV
-        run: |
-          kubectl delete pvc tempo-pvc --ignore-not-found
-          kubectl delete pv tempo-pv --ignore-not-found
+      #- name: Cleanup Tempo PVC and PV
+      #  run: |
+      #    kubectl delete pvc tempo-pvc --ignore-not-found
+      #    kubectl delete pv tempo-pv --ignore-not-found
 
       - name: Deploy tempo
         run: |
-          helm install tempo ./fitplan-helm/charts/tempo --wait
+          helm upgrade --install tempo ./fitplan-helm/charts/tempo --wait
 
-      - name: Uninstall existing grafana
-        run: |
-          helm uninstall grafana || echo "grafana release does not exist."
+      #- name: Uninstall existing grafana
+      #  run: |
+      #    helm uninstall grafana || echo "grafana release does not exist."
 
       - name: Deploy grafana
         run: |
-          helm install grafana ./fitplan-helm/charts/grafana --wait
+          helm upgrade --install grafana ./fitplan-helm/charts/grafana --wait
 
-      - name: Uninstall existing exercise
-        run: |
-          helm uninstall exercise || echo "exercise release does not exist."
+      #- name: Uninstall existing exercise
+      #  run: |
+      #    helm uninstall exercise || echo "exercise release does not exist."
 
       - name: Deploy exercise
         run: |
-          helm install exercise ./fitplan-helm/charts/exercise --wait
+          helm upgrade --install exercise ./fitplan-helm/charts/exercise --wait
 
-      - name: Uninstall existing fitplan-ingress
-        run: |
-          helm uninstall fitplan-ingress || echo "fitplan-ingress release does not exist."
+      #- name: Uninstall existing fitplan-ingress
+      #  run: |
+      #    helm uninstall fitplan-ingress || echo "fitplan-ingress release does not exist."
 
       - name: Deploy fitplan-ingress
         run: |
-          helm install fitplan-ingress ./fitplan-helm/charts/fitplan-ingress --wait
+          helm upgrade --install fitplan-ingress ./fitplan-helm/charts/fitplan-ingress --wait
 
-      - name: Uninstall existing fitplanfrontend
-        run: |
-          helm uninstall fitplanfrontend || echo "fitplanfrontend release does not exist."
+      #- name: Uninstall existing fitplanfrontend
+      #  run: |
+      #    helm uninstall fitplanfrontend || echo "fitplanfrontend release does not exist."
 
       - name: Deploy fitplanfrontend
         run: |
-          helm install fitplanfrontend ./fitplan-helm/charts/fitplanfrontend --wait
+          helm upgrade --install fitplanfrontend ./fitplan-helm/charts/fitplanfrontend --wait
 
-      - name: Uninstall existing gateway
-        run: |
-          helm uninstall gateway || echo "gateway release does not exist."
+      #- name: Uninstall existing gateway
+      #  run: |
+      #    helm uninstall gateway || echo "gateway release does not exist."
 
       - name: Deploy gateway
         run: |
-          helm install gateway ./fitplan-helm/charts/gateway --wait
+          helm upgrade --install gateway ./fitplan-helm/charts/gateway --wait
 
-      - name: Uninstall existing notification
-        run: |
-          helm uninstall notification || echo "notification release does not exist."
+      #- name: Uninstall existing notification
+      #  run: |
+      #    helm uninstall notification || echo "notification release does not exist."
 
       - name: Deploy notification
         run: |
-          helm install notification ./fitplan-helm/charts/notification --wait
+          helm upgrade --install notification ./fitplan-helm/charts/notification --wait
 
-      - name: Uninstall existing validation
-        run: |
-          helm uninstall validation || echo "validation release does not exist."
+      #- name: Uninstall existing validation
+      #  run: |
+      #    helm uninstall validation || echo "validation release does not exist."
 
       - name: Deploy validation
         run: |
-          helm install validation ./fitplan-helm/charts/validation --wait
+          helm upgrade --install validation ./fitplan-helm/charts/validation --wait
 
-      - name: Uninstall existing workout
-        run: |
-          helm uninstall workout || echo "workout release does not exist."
+      #- name: Uninstall existing workout
+      #  run: |
+      #    helm uninstall workout || echo "workout release does not exist."
 
       - name: Deploy workout
         run: |
-          helm install workout ./fitplan-helm/charts/workout --wait
-      # Run frontend connection test
+          helm upgrade --install workout ./fitplan-helm/charts/workout --wait
+
       - name: Run connection test to fitplanfrontend
         run: |
           helm test fitplan-helm --logs

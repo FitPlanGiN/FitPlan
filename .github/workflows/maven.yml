@@ -63,22 +63,89 @@ jobs:
        # run: |
        #   kubectl delete secret fitplan-helm-secrets --ignore-not-found
 
-      # Install common-config
       - name: Deploy common-config
         run: |
           helm upgrade --install common-config ./fitplan-helm/charts/common-config --wait --force
 
-      # Install configserver
       - name: Deploy configserver
         run: |
           helm upgrade --install configserver ./fitplan-helm/charts/configserver --wait --force
 
-      # Deploy other services
-      - name: Deploy other services
+      - name: Deploy mysql
         run: |
-          helm upgrade --install fitplan-helm ./fitplan-helm \
-            --dependency-update \
-            --wait
+          helm upgrade --install mysql ./fitplan-helm/charts/mysql --wait --force
+
+      - name: Deploy mongodb
+        run: |
+          helm upgrade --install mongodb ./fitplan-helm/charts/mongodb --wait --force
+
+      - name: Deploy keycloak-mysql
+        run: |
+          helm upgrade --install keycloak-mysql ./fitplan-helm/charts/keycloak-mysql --wait --force
+
+      - name: Deploy zookeeper
+        run: |
+          helm upgrade --install zookeeper ./fitplan-helm/charts/zookeeper --wait --force
+
+      - name: Deploy broker
+        run: |
+          helm upgrade --install broker ./fitplan-helm/charts/broker --wait --force
+
+      - name: Deploy kafka-ui
+        run: |
+          helm upgrade --install kafka-ui ./fitplan-helm/charts/kafka-ui --wait --force
+
+      - name: Deploy schema-registry
+        run: |
+          helm upgrade --install schema-registry ./fitplan-helm/charts/schema-registry --wait --force
+
+      - name: Deploy keycloak
+        run: |
+          helm upgrade --install keycloak ./fitplan-helm/charts/keycloak --wait --force
+
+      - name: Deploy prometheus
+        run: |
+          helm upgrade --install prometheus ./fitplan-helm/charts/prometheus --wait --force
+
+      - name: Deploy loki
+        run: |
+          helm upgrade --install loki ./fitplan-helm/charts/loki --wait --force
+
+      - name: Deploy tempo
+        run: |
+          helm upgrade --install tempo ./fitplan-helm/charts/tempo --wait --force
+
+      - name: Deploy grafana
+        run: |
+          helm upgrade --install grafana ./fitplan-helm/charts/grafana --wait --force
+
+      - name: Deploy exercise
+        run: |
+          helm upgrade --install exercise ./fitplan-helm/charts/exercise --wait --force
+
+      - name: Deploy fitplan-ingress
+        run: |
+          helm upgrade --install fitplan-ingress ./fitplan-helm/charts/fitplan-ingress --wait --force
+
+      - name: Deploy fitplanfrontend
+        run: |
+          helm upgrade --install fitplanfrontend ./fitplan-helm/charts/fitplanfrontend --wait --force
+
+      - name: Deploy gateway
+        run: |
+          helm upgrade --install gateway ./fitplan-helm/charts/gateway --wait --force
+
+      - name: Deploy notification
+        run: |
+          helm upgrade --install notification ./fitplan-helm/charts/notification --wait --force
+
+      - name: Deploy validation
+        run: |
+          helm upgrade --install validation ./fitplan-helm/charts/validation --wait --force
+
+      - name: Deploy workout
+        run: |
+          helm upgrade --install workout ./fitplan-helm/charts/workout --wait --force
 
       # Run frontend connection test
       - name: Run connection test to fitplanfrontend

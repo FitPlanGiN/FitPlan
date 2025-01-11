@@ -124,6 +124,11 @@ jobs:
         run: |
           helm uninstall keycloak-mysql || echo "keycloak-mysql release does not exist."
 
+      - name: Cleanup Keycloak-MySQL PVC and PV
+        run: |
+          kubectl delete pvc keycloak-mysql-pvc --ignore-not-found
+          kubectl delete pv keycloak-mysql-pv --ignore-not-found
+
       - name: Deploy keycloak-mysql
         run: |
           helm install keycloak-mysql ./fitplan-helm/charts/keycloak-mysql --wait

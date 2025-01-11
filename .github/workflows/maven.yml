@@ -50,6 +50,25 @@ jobs:
       - name: Set up Helm
         uses: azure/setup-helm@v3
 
+      # Cleanup existing PVC and PV (if any)
+      - name: Cleanup MySQL PVC and PV
+        run: |
+          kubectl delete pvc mysql-pvc --ignore-not-found
+          kubectl delete pv mysql-pv --ignore-not-found
+
+    # Create a Persistent Disk for MySQL
+    #- name: Create GCE Persistent Disk for MySQL
+     # run: |
+      #  gcloud compute disks create mysql-disk --size=10Gi --zone=europe-central2-a
+
+      - name: Delete existing MySQL disk (if any)
+        run: |
+          if gcloud compute disks describe mysql-disk --zone=europe-central2-a > /dev/null 2>&1; then
+            gcloud compute disks delete mysql-disk --zone=europe-central2-a --quiet
+          else
+            echo "MySQL disk not found, skipping deletion."
+          fi
+
       - name: Check if MySQL disk exists
         run: |
           if ! gcloud compute disks describe mysql-disk --zone=europe-central2-a > /dev/null 2>&1; then

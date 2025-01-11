@@ -24,7 +24,7 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           mvn clean spring-boot:build-image -DskipTests
-  
+
       - name: Building and pushing fitplanfrontend
         run: |
           docker build --no-cache -t ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest .

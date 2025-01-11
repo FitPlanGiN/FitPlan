@@ -9,6 +9,3 @@ service:
 
 configserver:
   port: 8888
-
-secrets:
-  openaiApiKey: ""

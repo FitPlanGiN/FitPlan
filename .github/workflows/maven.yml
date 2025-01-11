@@ -61,21 +61,21 @@ jobs:
       # Deploy common-config
       - name: Deploy common-config
         run: |
-          helm upgrade --install common-config ./fitplan-helm/charts/common-config \
-            --wait --force
+          helm install common-config ./fitplan-helm/charts/common-config \
+            --replace --wait
 
       # Deploy configserver
       - name: Deploy configserver
         run: |
-          helm upgrade --install configserver ./fitplan-helm/charts/configserver \
-            --wait --force
+          helm install configserver ./fitplan-helm/charts/configserver \
+            --replace --wait
 
       # Deploy other services
       - name: Deploy other services
         run: |
-          helm upgrade --install fitplan-helm . \
+          helm install fitplan-helm . \
             --dependency-update \
-            --wait --force
+            --replace --wait
 
       # Run frontend connection test
       - name: Run connection test to fitplanfrontend

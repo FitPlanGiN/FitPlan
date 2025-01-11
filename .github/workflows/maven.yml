@@ -19,18 +19,18 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-          #  - name: Build and push images using spring-boot:build-image
-          # env:
-          #   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          #  run: |
-          #   mvn clean spring-boot:build-image -DskipTests
+      - name: Build and push images using spring-boot:build-image
+        env:
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          mvn clean spring-boot:build-image -DskipTests
 
-          #- name: Building and pushing fitplanfrontend
-          # run: |
-          #  docker build --no-cache -t ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest .
-          # echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-          # docker push ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest
-      # working-directory: fitplanfrontend
+      - name: Building and pushing fitplanfrontend
+        run: |
+          docker build --no-cache -t ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest .
+          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+          docker push ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest
+        working-directory: fitplanfrontend
 
       - name: Google Cloud authentication
         uses: google-github-actions/auth@v2
@@ -268,18 +268,10 @@ jobs:
 
       - name: Run curl test
         run: |
-          # Delete the existing pod if it exists
-          kubectl delete pod curl-test --ignore-not-found
-          # Run the curl test
-          kubectl run curl-test --image=curlimages/curl:latest --restart=Never -- \
+          # Run the curl test directly and clean up automatically
+          kubectl run curl-test --rm --image=curlimages/curl:latest --restart=Never -- \
             curl -f http://34.107.231.170/ || (echo "Connection to fitplanfrontend failed" && exit 1)
-          # Wait for the pod to finish and fetch logs
-          kubectl wait --for=condition=Ready pod/curl-test --timeout=60s || exit 1
-          kubectl logs curl-test
-          # Clean up the test pod
-          kubectl delete pod curl-test --ignore-not-found
-
-
+      
       #- name: Run connection test to fitplanfrontend
        # run: |
         #  helm test fitplan-helm --logs

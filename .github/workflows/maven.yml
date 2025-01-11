@@ -193,6 +193,11 @@ jobs:
         run: |
           helm uninstall tempo || echo "tempo release does not exist."
 
+      - name: Cleanup Tempo PVC and PV
+        run: |
+          kubectl delete pvc tempo-pvc --ignore-not-found
+          kubectl delete pv tempo-pv --ignore-not-found
+
       - name: Deploy tempo
         run: |
           helm install tempo ./fitplan-helm/charts/tempo --wait

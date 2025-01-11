@@ -19,18 +19,18 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build and push images using spring-boot:build-image
-        env:
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        run: |
-          mvn clean spring-boot:build-image -DskipTests
+      #- name: Build and push images using spring-boot:build-image
+       # env:
+       #   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+       # run: |
+       #   mvn clean spring-boot:build-image -DskipTests
 
-      - name: Building and pushing fitplanfrontend
-        run: |
-          docker build --no-cache -t ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest .
-          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-          docker push ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest
-        working-directory: fitplanfrontend
+      #- name: Building and pushing fitplanfrontend
+       # run: |
+       #   docker build --no-cache -t ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest .
+       #   echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      #   docker push ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest
+      #  working-directory: fitplanfrontend
 
       - name: Google Cloud authentication
         uses: google-github-actions/auth@v2
@@ -61,13 +61,13 @@ jobs:
       # Deploy common-config
       - name: Deploy common-config
         run: |
-          helm upgrade --install common-config ./charts/common-config \
+          helm upgrade --install common-config ./fitplan-helm/charts/common-config \
             --wait
 
       # Deploy configserver
       - name: Deploy configserver
         run: |
-          helm upgrade --install configserver ./charts/configserver \
+          helm upgrade --install configserver ./fitplan-helm/charts/configserver \
             --wait
 
       # Deploy other services

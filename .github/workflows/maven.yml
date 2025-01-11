@@ -266,11 +266,10 @@ jobs:
         run: |
           helm upgrade --install workout ./fitplan-helm/charts/workout --wait
 
-      - name: Test frontend connection
+      - name: Run frontend connection test
         run: |
-          kubectl run curl-test --image=curlimages/curl:latest --restart=Never \
-            --command -- curl -f http://34.107.231.170/ ||
-            (echo "Connection to fitplanfrontend failed" && exit 1)
+          kubectl run curl-test --rm --image=curlimages/curl:latest --restart=Never -- \
+            curl -f http://34.107.231.170/ || (echo "Connection to fitplanfrontend failed" && exit 1)
 
       #- name: Run connection test to fitplanfrontend
        # run: |

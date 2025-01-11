@@ -39,7 +39,6 @@ kind: Service
 metadata:
   name: kafka-ui
 spec:
-  type: NodePort
   selector:
     app: kafka-ui
   ports:

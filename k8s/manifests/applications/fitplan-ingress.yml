@@ -9,7 +9,6 @@ metadata:
     #nginx.ingress.kubernetes.io/rewrite-target: /  # Rewrite path using the captured group
     #nginx.ingress.kubernetes.io/use-regex: "true"  # Enable regex matching in paths
 spec:
-  ingressClassName: nginx
   tls:
   - secretName: fitplan-tls
   rules:

@@ -19,18 +19,18 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build and push images using spring-boot:build-image
-        env:
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        run: |
-          mvn clean spring-boot:build-image -DskipTests
+    #  - name: Build and push images using spring-boot:build-image
+       # env:
+       #   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      #  run: |
+       #   mvn clean spring-boot:build-image -DskipTests
   
-      - name: Building and pushing fitplanfrontend
-        run: |
-          docker build --no-cache -t ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest .
-          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-          docker push ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest
-        working-directory: fitplanfrontend          
+      #- name: Building and pushing fitplanfrontend
+       # run: |
+        #  docker build --no-cache -t ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest .
+         # echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+         # docker push ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest
+       # working-directory: fitplanfrontend          
 
       - name: Google Cloud authentication
         uses: google-github-actions/auth@v2
@@ -59,9 +59,9 @@ jobs:
           fi
 
       # Remove conflicting secrets (if necessary)
-      - name: Remove existing secrets
-        run: |
-          kubectl delete secret fitplan-helm-secrets --ignore-not-found
+    #  - name: Remove existing secrets
+       # run: |
+       #   kubectl delete secret fitplan-helm-secrets --ignore-not-found
 
       # Install common-config
       - name: Deploy common-config

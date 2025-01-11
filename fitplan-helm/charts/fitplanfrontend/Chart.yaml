@@ -1,0 +1,5 @@
+apiVersion: v2
+name: fitplanfrontend
+description: Helm chart for deploying the FitPlanFrontend application
+version: 0.1.0
+appVersion: "latest"

@@ -1,0 +1,7 @@
+config:
+  lokiUrl: "http://loki.prod.svc.cluster.local:3100/loki/api/v1/push"
+  zipkinTracingEndpoint: "http://tempo.prod.svc.cluster.local:9411"
+  exerciseServiceUrl: "http://exercise.prod.svc.cluster.local:8080"
+  workoutServiceUrl: "http://workout.prod.svc.cluster.local:8081"
+  validationServiceUrl: "http://validation.prod.svc.cluster.local:8082"
+  kafkaBootstrapServers: "broker.prod.svc.cluster.local:29092"

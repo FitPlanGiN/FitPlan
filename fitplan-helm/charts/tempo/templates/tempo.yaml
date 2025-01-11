@@ -1,0 +1,97 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: tempo
+  template:
+    metadata:
+      labels:
+        app: tempo
+    spec:
+      containers:
+        - name: tempo
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          args: ["-config.file=/etc/tempo.yaml"]
+          volumeMounts:
+            - name: tempo-config
+              mountPath: /etc/tempo.yaml
+              subPath: tempo.yaml
+            - name: tempo-data
+              mountPath: /tmp/tempo
+          ports:
+            - containerPort: {{ .Values.ports.tempo }}
+              name: tempo
+            - containerPort: {{ .Values.ports.zipkin }}
+              name: zipkin
+      volumes:
+        - name: tempo-config
+          configMap:
+            name: {{ .Release.Name }}-config
+        - name: tempo-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  selector:
+    app: tempo
+  ports:
+    - protocol: TCP
+      port: {{ .Values.ports.tempo }}
+      targetPort: {{ .Values.ports.tempo }}
+      name: tempo
+    - protocol: TCP
+      port: {{ .Values.ports.zipkin }}
+      targetPort: {{ .Values.ports.zipkin }}
+      name: zipkin
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+data:
+  tempo.yaml: |
+    server:
+      http_listen_port: {{ .Values.ports.tempo }}
+
+    distributor:
+      receivers:
+        zipkin:
+
+    storage:
+      trace:
+        backend: {{ .Values.storage.backend }}
+        local:
+          path: {{ .Values.storage.local.path }}
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Release.Name }}-pv
+spec:
+  storageClassName: {{ .Values.storage.className }}
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: {{ .Values.storage.capacity }}
+  hostPath:
+    path: {{ .Values.storage.hostPath }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.storage.capacity }}

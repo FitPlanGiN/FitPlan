@@ -1,0 +1,14 @@
+replicaCount: 2
+
+image:
+  repository: lordsecond/configserver
+  tag: latest
+
+server:
+  port: 8888
+
+service:
+  type: LoadBalancer
+
+config:
+  searchLocation: "file:/config/prod"

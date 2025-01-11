@@ -1,0 +1,20 @@
+replicaCount: 3
+
+image:
+  repository: mongo
+  tag: 7.0.5
+
+service:
+  port: 27017
+
+storage:
+  className: "standard"
+  capacity: "5Gi"
+  hostPath: "/data/mongodb-prod"
+
+config:
+  username: "root-prod"
+  database: "exercise_prod"
+
+secrets:
+  rootPassword: "cHJvZHBhc3N3b3Jk"

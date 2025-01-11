@@ -1,0 +1,14 @@
+replicaCount: 1
+
+image:
+  repository: lordsecond/notification
+  tag: latest
+
+service:
+  port: 8083
+
+configserver:
+  port: 8888
+
+config:
+  schemaRegistryUrl: "http://schema-registry.dev.svc.cluster.local:8081"

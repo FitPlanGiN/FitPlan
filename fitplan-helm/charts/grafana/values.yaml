@@ -1,0 +1,21 @@
+replicaCount: 1
+
+image:
+  repository: grafana/grafana
+  tag: 10.1.0
+
+service:
+  port: 3000
+
+config:
+  anonymousEnabled: "true"
+  anonymousOrgRole: "Admin"
+  disableLoginForm: "true"
+
+datasources:
+  prometheus:
+    url: "http://prometheus.default.svc.cluster.local:9090"
+  tempo:
+    url: "http://tempo.default.svc.cluster.local:3200"
+  loki:
+    url: "http://loki.default.svc.cluster.local:3100"

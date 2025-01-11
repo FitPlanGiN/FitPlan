@@ -1,0 +1,13 @@
+replicaCount: 1
+
+image:
+  repository: provectuslabs/kafka-ui
+  tag: latest
+
+service:
+  port: 8080
+
+config:
+  clusterName: "dev-cluster"
+  bootstrapServers: "broker.dev.svc.cluster.local:29092"
+  dynamicConfigEnabled: "true"

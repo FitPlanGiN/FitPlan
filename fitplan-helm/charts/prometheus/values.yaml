@@ -1,0 +1,42 @@
+replicaCount: 1
+
+image:
+  repository: prom/prometheus
+  tag: v2.46.0
+
+service:
+  port: 9090
+
+config:
+  global:
+    scrapeInterval: 5s
+    evaluationInterval: 5s
+  scrapeConfigs:
+    - jobName: "gateway"
+      metricsPath: "/actuator/prometheus"
+      targets:
+        - "gateway.default.svc.cluster.local:9000"
+    - jobName: "exercise"
+      metricsPath: "/actuator/prometheus"
+      targets:
+        - "exercise.default.svc.cluster.local:8080"
+      labels:
+        application: "Exercise Service"
+    - jobName: "workout"
+      metricsPath: "/actuator/prometheus"
+      targets:
+        - "workout.default.svc.cluster.local:8081"
+      labels:
+        application: "Workout Service"
+    - jobName: "validation"
+      metricsPath: "/actuator/prometheus"
+      targets:
+        - "validation.default.svc.cluster.local:8082"
+      labels:
+        application: "Validation Service"
+    - jobName: "notification"
+      metricsPath: "/actuator/prometheus"
+      targets:
+        - "notification.default.svc.cluster.local:8083"
+      labels:
+        application: "Notification Service"

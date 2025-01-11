@@ -1,0 +1,17 @@
+replicaCount: 1
+
+image:
+  repository: grafana/tempo
+  tag: 2.2.2
+
+ports:
+  tempo: 3200
+  zipkin: 9411
+
+storage:
+  backend: local
+  local:
+    path: /tmp/tempo/blocks
+  className: "standard"
+  capacity: "1Gi"
+  hostPath: "/tmp/tempo"

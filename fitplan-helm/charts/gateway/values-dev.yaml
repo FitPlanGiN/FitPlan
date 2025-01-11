@@ -1,0 +1,14 @@
+replicaCount: 1
+
+image:
+  repository: lordsecond/gateway
+  tag: latest
+
+service:
+  port: 9000
+
+configserver:
+  port: 8888
+
+config:
+  jwtIssuerUri: "http://keycloak.dev.svc.cluster.local:8080/realms/spring-microservices-security-realm"

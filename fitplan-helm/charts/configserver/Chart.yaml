@@ -1,0 +1,5 @@
+apiVersion: v2
+name: configserver
+description: Helm chart for deploying ConfigServer
+version: 0.1.0
+appVersion: "latest"

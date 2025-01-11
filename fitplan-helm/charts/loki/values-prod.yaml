@@ -1,0 +1,11 @@
+replicaCount: 3
+
+image:
+  repository: grafana/loki
+  tag: main
+
+service:
+  port: 3100
+
+config:
+  file: "prod-config.yaml"

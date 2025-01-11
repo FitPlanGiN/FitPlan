@@ -1,0 +1,5 @@
+apiVersion: v2
+name: workout
+description: Helm chart for deploying the Workout service
+version: 0.1.0
+appVersion: "latest"

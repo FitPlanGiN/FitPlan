@@ -1,0 +1,21 @@
+replicaCount: 1
+
+image:
+  repository: mysql
+  tag: 8.0
+
+service:
+  port: 3306
+
+storage:
+  className: "standard"
+  capacity: "1Gi"
+  hostPath: "/data/keycloak/mysql"
+
+config:
+  database: "keycloak"
+  user: "keycloak"
+
+secrets:
+  mysqlPassword: "cGFzc3dvcmQ="
+  mysqlRootPassword: "cm9vdA=="

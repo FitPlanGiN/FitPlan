@@ -1,0 +1,19 @@
+replicaCount: 1
+
+image:
+  repository: mysql
+  tag: 8.3.0
+
+service:
+  port: 3306
+
+storage:
+  className: "standard"
+  capacity: "10Gi"
+
+config:
+  initdb: |
+    CREATE DATABASE IF NOT EXISTS workout;
+
+secrets:
+  rootPassword: "bXlzcWw="

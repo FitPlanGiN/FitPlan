@@ -96,9 +96,9 @@ jobs:
       #  fi
 
     
-   # - name: Create MySQL disk
-   #   run: |
-    #    gcloud compute disks create mysql-disk --size=10Gi --zone=europe-central2-a
+    #- name: Create MySQL disk
+    #  run: |
+     #   gcloud compute disks create mysql-disk --size=10Gi --zone=europe-central2-a
 
     
     

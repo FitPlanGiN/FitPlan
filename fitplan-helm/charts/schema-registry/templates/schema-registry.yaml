@@ -1,4 +1,33 @@
 ---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-configure-schemas-topic
+  labels:
+    app: schema-registry
+spec:
+  template:
+    metadata:
+      labels:
+        app: schema-registry
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: configure-schemas-topic
+          image: confluentinc/cp-kafka:7.5.0
+          command:
+            - sh
+            - -c
+            - |
+              kafka-topics --bootstrap-server {{ .Values.config.kafkaStoreBootstrapServers }} \
+              --create \
+              --if-not-exists \
+              --topic _schemas \
+              --config cleanup.policy=compact || true
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: {{ .Values.config.kafkaStoreBootstrapServers }}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:

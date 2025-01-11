@@ -70,3 +70,25 @@ metadata:
   name: exercise-config
 data:
   SPRING_DATA_MONGODB_URI: "mongodb://root:password@mongodb.default.svc.cluster.local:27017/exercise?authSource=admin"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fluentd-config
+data:
+  fluentd.conf: |
+    <source>
+      @type forward
+      port 24224
+    </source>
+
+    <match **>
+      @type elasticsearch
+      host elasticsearch.default.svc.cluster.local
+      port 9200
+      index_name fluentd
+      type_name fluentd
+      logstash_format true
+      logstash_prefix fluentd
+      flush_interval 5s
+    </match>

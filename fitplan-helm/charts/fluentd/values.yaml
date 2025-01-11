@@ -1,0 +1,8 @@
+elasticsearch:
+  host: "elasticsearch.logging.svc.cluster.local"
+  port: 9200
+fluentd:
+  logLevel: "info"
+  output:
+    buffer:
+      type: "memory"

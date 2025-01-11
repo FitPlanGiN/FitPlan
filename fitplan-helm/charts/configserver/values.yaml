@@ -12,3 +12,7 @@ service:
 
 config:
   searchLocation: "file:/config/"
+
+fluentd:
+  enabled: true
+  address: fluentd.logging.svc.cluster.local:24224

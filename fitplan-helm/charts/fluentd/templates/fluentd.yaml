@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fluentd
+  labels:
+    app: fluentd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fluentd
+  template:
+    metadata:
+      labels:
+        app: fluentd
+    spec:
+      containers:
+        - name: fluentd
+          image: fluent/fluentd:latest
+          env:
+            - name: FLUENT_ELASTICSEARCH_HOST
+              value: "elasticsearch.default.svc.cluster.local"
+          ports:
+            - containerPort: 24224
+          volumeMounts:
+            - name: fluentd-config
+              mountPath: /fluentd/etc
+      volumes:
+        - name: fluentd-config
+          configMap:
+            name: fluentd-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fluentd-config
+data:
+  fluent.conf: |
+    <source>
+      @type forward
+      port 24224
+    </source>
+    <match **>
+      @type elasticsearch
+      host ${FLUENT_ELASTICSEARCH_HOST}
+      port 9200
+      logstash_format true
+    </match>

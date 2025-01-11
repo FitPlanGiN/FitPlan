@@ -12,3 +12,7 @@ configserver:
 
 config:
   mongodbUri: "mongodb://root:password@mongodb.default.svc.cluster.local:27017/exercise?authSource=admin"
+
+fluentd:
+  enabled: true
+  address: fluentd.logging.svc.cluster.local:24224

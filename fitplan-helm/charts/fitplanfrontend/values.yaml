@@ -6,3 +6,7 @@ image:
 
 service:
   port: 80
+
+fluentd:
+  enabled: true
+  address: fluentd.logging.svc.cluster.local:24224

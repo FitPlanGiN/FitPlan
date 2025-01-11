@@ -12,3 +12,7 @@ configserver:
 
 config:
   jwtIssuerUri: "http://keycloak.default.svc.cluster.local:8080/realms/spring-microservices-security-realm"
+
+fluentd:
+  enabled: true
+  address: fluentd.logging.svc.cluster.local:24224

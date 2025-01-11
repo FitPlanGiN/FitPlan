@@ -13,3 +13,7 @@ configserver:
 config:
   datasourceUrl: "jdbc:mysql://mysql.default.svc.cluster.local:3306/workout"
   schemaRegistryUrl: "http://schema-registry.default.svc.cluster.local:8081"
+
+fluentd:
+  enabled: true
+  address: fluentd.logging.svc.cluster.local:24224

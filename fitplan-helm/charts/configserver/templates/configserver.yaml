@@ -55,10 +55,19 @@ spec:
             - name: config-volume
               mountPath: /config/application.properties
               subPath: application.properties
+            - name: logs
+              mountPath: /var/log
+          env:
+            - name: LOGGING_DRIVER
+              value: fluentd
+            - name: FLUENTD_ADDRESS
+              value: fluentd.logging.svc.cluster.local:24224
       volumes:
         - name: config-volume
           configMap:
             name: {{ .Release.Name }}-config
+        - name: logs
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service

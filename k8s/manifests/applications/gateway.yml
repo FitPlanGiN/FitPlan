@@ -101,4 +101,23 @@ metadata:
 data:
   #SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI: "http://34.118.122.132:31824/realms/spring-microservices-security-realm"
   SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI: "http://keycloak.default.svc.cluster.local:8080/realms/spring-microservices-security-realm"
-
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fluentd-config
+data:
+  fluentd.conf: |
+    <source>
+      @type forward
+      port 24224
+    </source>
+    
+    <match **>
+      @type elasticsearch
+      host elasticsearch.default.svc.cluster.local
+      port 9200
+      logstash_format true
+      logstash_prefix fluentd
+      flush_interval 5s
+    </match>

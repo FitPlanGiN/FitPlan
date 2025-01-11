@@ -1,0 +1,5 @@
+apiVersion: v2
+name: fitplan-ingress
+description: Helm chart for deploying the FitPlan ingress with TLS
+version: 0.1.0
+appVersion: "1.0"

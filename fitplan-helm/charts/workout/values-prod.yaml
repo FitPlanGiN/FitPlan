@@ -1,0 +1,15 @@
+replicaCount: 2
+
+image:
+  repository: lordsecond/workout
+  tag: latest
+
+service:
+  port: 8081
+
+configserver:
+  port: 8888
+
+config:
+  datasourceUrl: "jdbc:mysql://mysql.prod.svc.cluster.local:3306/workout_prod"
+  schemaRegistryUrl: "http://schema-registry.prod.svc.cluster.local:8081"

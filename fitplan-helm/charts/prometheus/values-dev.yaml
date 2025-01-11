@@ -1,0 +1,24 @@
+replicaCount: 1
+
+image:
+  repository: prom/prometheus
+  tag: v2.46.0
+
+service:
+  port: 9090
+
+config:
+  global:
+    scrapeInterval: 10s
+    evaluationInterval: 10s
+  scrapeConfigs:
+    - jobName: "gateway"
+      metricsPath: "/actuator/prometheus"
+      targets:
+        - "gateway.dev.svc.cluster.local:9000"
+    - jobName: "exercise"
+      metricsPath: "/actuator/prometheus"
+      targets:
+        - "exercise.dev.svc.cluster.local:8080"
+      labels:
+        application: "Exercise Service"

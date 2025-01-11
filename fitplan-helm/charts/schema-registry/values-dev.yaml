@@ -1,0 +1,13 @@
+replicaCount: 1
+
+image:
+  repository: confluentinc/cp-schema-registry
+  tag: 7.5.0
+
+service:
+  port: 8081
+
+config:
+  hostName: "schema-registry-dev"
+  kafkaStoreBootstrapServers: "broker.dev.svc.cluster.local:29092"
+  listeners: "http://0.0.0.0:8081"

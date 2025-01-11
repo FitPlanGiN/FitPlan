@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}
+data:
+  LOKI_URL: "{{ .Values.config.lokiUrl }}"
+  MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: "{{ .Values.config.zipkinTracingEndpoint }}"
+  EXERCISE_SERVICE_URL: "{{ .Values.config.exerciseServiceUrl }}"
+  WORKOUT_SERVICE_URL: "{{ .Values.config.workoutServiceUrl }}"
+  VALIDATION_SERVICE_URL: "{{ .Values.config.validationServiceUrl }}"
+  SPRING_KAFKA_BOOTSTRAP-SERVERS: "{{ .Values.config.kafkaBootstrapServers }}"

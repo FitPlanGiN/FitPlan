@@ -1,0 +1,5 @@
+apiVersion: v2
+name: kafka-broker
+description: Helm chart for deploying Kafka Broker
+version: 0.1.0
+appVersion: "7.5.0"

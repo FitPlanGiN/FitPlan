@@ -1,0 +1,14 @@
+replicaCount: 2
+
+image:
+  repository: lordsecond/exercise
+  tag: latest
+
+service:
+  port: 8080
+
+configserver:
+  port: 8888
+
+config:
+  mongodbUri: "mongodb://root:password@mongodb.prod.svc.cluster.local:27017/exercise?authSource=admin"

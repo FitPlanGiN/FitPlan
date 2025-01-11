@@ -1,0 +1,29 @@
+replicaCount: 1
+
+image:
+  repository: quay.io/keycloak/keycloak
+  tag: 23.0.5
+
+service:
+  port: 8080
+  nodePort: 31824
+
+env:
+  httpOnlyCookie: "true"
+  cookieSameSite: "None"
+  cookieSecure: "false"
+  proxyAddressForwarding: "true"
+  proxy: "edge"
+  hostnameStrict: "false"
+
+secrets:
+  dbPassword: "cGFzc3dvcmQ="
+  adminPassword: "bmlraW5nYXNwZXI="
+
+config:
+  dbVendor: "MYSQL"
+  dbAddr: "mysql"
+  dbDatabase: "keycloak"
+  dbUser: "keycloak"
+  admin: "admin"
+

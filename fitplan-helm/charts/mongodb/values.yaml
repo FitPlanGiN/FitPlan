@@ -1,0 +1,20 @@
+replicaCount: 1
+
+image:
+  repository: mongo
+  tag: 7.0.5
+
+service:
+  port: 27017
+
+storage:
+  className: "standard"
+  capacity: "1Gi"
+  hostPath: "/data/mongodb"
+
+config:
+  username: "root"
+  database: "exercise"
+
+secrets:
+  rootPassword: "cGFzc3dvcmQ="

@@ -1,0 +1,8 @@
+replicaCount: 1
+
+image:
+  repository: lordsecond/fitplanfrontend
+  tag: latest
+
+service:
+  port: 80

@@ -1,0 +1,16 @@
+replicaCount: 3
+
+image:
+  repository: confluentinc/cp-kafka
+  tag: 7.5.0
+
+ports:
+  external: 9092
+  internal: 29092
+
+config:
+  brokerId: "1"
+  zookeeperConnect: "zookeeper.prod.svc.cluster.local:2181"
+  listenerSecurityProtocolMap: "PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
+  advertisedListeners: "PLAINTEXT://broker:29092,PLAINTEXT_HOST://kafka.prod.external:9092"
+  offsetsTopicReplicationFactor: "3"

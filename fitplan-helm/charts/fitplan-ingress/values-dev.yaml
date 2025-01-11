@@ -1,0 +1,9 @@
+ingress:
+  globalStaticIpName: "fitplan-external-ip"
+
+tls:
+  secretName: "fitplan-tls"
+
+service:
+  name: fitplanfrontend
+  port: 80

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "fitplan-helm.fullname" . }}-test-frontend-connection"
+  labels:
+    {{- include "fitplan-helm.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: curl
+      image: curlimages/curl:latest
+      command: ['sh', '-c']
+      args:
+        - >
+          curl -f http://34.107.231.170/ ||
+          (echo "Connection to fitplanfrontend failed" && exit 1);
+  restartPolicy: Never

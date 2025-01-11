@@ -1,0 +1,21 @@
+replicaCount: 2
+
+image:
+  repository: mysql
+  tag: 8.0
+
+service:
+  port: 3306
+
+storage:
+  className: "standard"
+  capacity: "5Gi"
+  hostPath: "/data/keycloak/mysql-prod"
+
+config:
+  database: "keycloak_prod"
+  user: "keycloak_prod"
+
+secrets:
+  mysqlPassword: "cHJvZHBhc3N3b3Jk"
+  mysqlRootPassword: "cHJvZHJvb3Q="

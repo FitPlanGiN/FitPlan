@@ -19,11 +19,15 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build and push Docker images
+      - name: Build and push images using spring-boot:build-image
         env:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           mvn clean spring-boot:build-image -DskipTests
+
+      - name: Building and pushing fitplanfrontend
+        run: |
+          docker build --no-cache -t ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest .
           echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
           docker push ${{ secrets.DOCKER_USERNAME }}/fitplanfrontend:latest
         working-directory: fitplanfrontend
@@ -64,15 +68,6 @@ jobs:
       - name: Deploy configserver
         run: |
           helm upgrade --install configserver ./charts/configserver \
-            --wait
-
-      # Deploy chart
-      - name: Deploy validation chart
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: |
-          helm upgrade --install validation ./charts/validation \
-            --set secrets.openaiApiKey=$OPENAI_API_KEY \
             --wait
 
       # Deploy other services

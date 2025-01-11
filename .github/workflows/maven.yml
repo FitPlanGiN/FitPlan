@@ -63,90 +63,173 @@ jobs:
        # run: |
        #   kubectl delete secret fitplan-helm-secrets --ignore-not-found
 
+      - name: Uninstall existing common-config
+        run: |
+          helm uninstall common-config || echo "common-config release does not exist."
+
       - name: Deploy common-config
         run: |
-          helm upgrade --install common-config ./fitplan-helm/charts/common-config --wait --force
+          helm install common-config ./fitplan-helm/charts/common-config --wait
+
+      - name: Uninstall existing configserver
+        run: |
+          helm uninstall configserver || echo "configserver release does not exist."
 
       - name: Deploy configserver
         run: |
-          helm upgrade --install configserver ./fitplan-helm/charts/configserver --wait --force
+          helm install configserver ./fitplan-helm/charts/configserver --wait
+
+      - name: Uninstall existing mysql
+        run: |
+          helm uninstall mysql || echo "mysql release does not exist."
 
       - name: Deploy mysql
         run: |
-          helm upgrade --install mysql ./fitplan-helm/charts/mysql --wait --force
+          helm install mysql ./fitplan-helm/charts/mysql --wait
+
+      - name: Uninstall existing mongodb
+        run: |
+          helm uninstall mongodb || echo "mongodb release does not exist."
 
       - name: Deploy mongodb
         run: |
-          helm upgrade --install mongodb ./fitplan-helm/charts/mongodb --wait --force
+          helm install mongodb ./fitplan-helm/charts/mongodb --wait
+
+      - name: Uninstall existing keycloak-mysql
+        run: |
+          helm uninstall keycloak-mysql || echo "keycloak-mysql release does not exist."
 
       - name: Deploy keycloak-mysql
         run: |
-          helm upgrade --install keycloak-mysql ./fitplan-helm/charts/keycloak-mysql --wait --force
+          helm install keycloak-mysql ./fitplan-helm/charts/keycloak-mysql --wait
+
+      - name: Uninstall existing zookeeper
+        run: |
+          helm uninstall zookeeper || echo "zookeeper release does not exist."
 
       - name: Deploy zookeeper
         run: |
-          helm upgrade --install zookeeper ./fitplan-helm/charts/zookeeper --wait --force
+          helm install zookeeper ./fitplan-helm/charts/zookeeper --wait
+
+      - name: Uninstall existing broker
+        run: |
+          helm uninstall broker || echo "broker release does not exist."
 
       - name: Deploy broker
         run: |
-          helm upgrade --install broker ./fitplan-helm/charts/broker --wait --force
+          helm install broker ./fitplan-helm/charts/broker --wait
+
+      - name: Uninstall existing kafka-ui
+        run: |
+          helm uninstall kafka-ui || echo "kafka-ui release does not exist."
 
       - name: Deploy kafka-ui
         run: |
-          helm upgrade --install kafka-ui ./fitplan-helm/charts/kafka-ui --wait --force
+          helm install kafka-ui ./fitplan-helm/charts/kafka-ui --wait
+
+      - name: Uninstall existing schema-registry
+        run: |
+          helm uninstall schema-registry || echo "schema-registry release does not exist."
 
       - name: Deploy schema-registry
         run: |
-          helm upgrade --install schema-registry ./fitplan-helm/charts/schema-registry --wait --force
+          helm install schema-registry ./fitplan-helm/charts/schema-registry --wait
+
+      - name: Uninstall existing keycloak
+        run: |
+          helm uninstall keycloak || echo "keycloak release does not exist."
 
       - name: Deploy keycloak
         run: |
-          helm upgrade --install keycloak ./fitplan-helm/charts/keycloak --wait --force
+          helm install keycloak ./fitplan-helm/charts/keycloak --wait
+
+      - name: Uninstall existing prometheus
+        run: |
+          helm uninstall prometheus || echo "prometheus release does not exist."
 
       - name: Deploy prometheus
         run: |
-          helm upgrade --install prometheus ./fitplan-helm/charts/prometheus --wait --force
+          helm install prometheus ./fitplan-helm/charts/prometheus --wait
+
+      - name: Uninstall existing loki
+        run: |
+          helm uninstall loki || echo "loki release does not exist."
 
       - name: Deploy loki
         run: |
-          helm upgrade --install loki ./fitplan-helm/charts/loki --wait --force
+          helm install loki ./fitplan-helm/charts/loki --wait
+
+      - name: Uninstall existing tempo
+        run: |
+          helm uninstall tempo || echo "tempo release does not exist."
 
       - name: Deploy tempo
         run: |
-          helm upgrade --install tempo ./fitplan-helm/charts/tempo --wait --force
+          helm install tempo ./fitplan-helm/charts/tempo --wait
+
+      - name: Uninstall existing grafana
+        run: |
+          helm uninstall grafana || echo "grafana release does not exist."
 
       - name: Deploy grafana
         run: |
-          helm upgrade --install grafana ./fitplan-helm/charts/grafana --wait --force
+          helm install grafana ./fitplan-helm/charts/grafana --wait
+
+      - name: Uninstall existing exercise
+        run: |
+          helm uninstall exercise || echo "exercise release does not exist."
 
       - name: Deploy exercise
         run: |
-          helm upgrade --install exercise ./fitplan-helm/charts/exercise --wait --force
+          helm install exercise ./fitplan-helm/charts/exercise --wait
+
+      - name: Uninstall existing fitplan-ingress
+        run: |
+          helm uninstall fitplan-ingress || echo "fitplan-ingress release does not exist."
 
       - name: Deploy fitplan-ingress
         run: |
-          helm upgrade --install fitplan-ingress ./fitplan-helm/charts/fitplan-ingress --wait --force
+          helm install fitplan-ingress ./fitplan-helm/charts/fitplan-ingress --wait
+
+      - name: Uninstall existing fitplanfrontend
+        run: |
+          helm uninstall fitplanfrontend || echo "fitplanfrontend release does not exist."
 
       - name: Deploy fitplanfrontend
         run: |
-          helm upgrade --install fitplanfrontend ./fitplan-helm/charts/fitplanfrontend --wait --force
+          helm install fitplanfrontend ./fitplan-helm/charts/fitplanfrontend --wait
+
+      - name: Uninstall existing gateway
+        run: |
+          helm uninstall gateway || echo "gateway release does not exist."
 
       - name: Deploy gateway
         run: |
-          helm upgrade --install gateway ./fitplan-helm/charts/gateway --wait --force
+          helm install gateway ./fitplan-helm/charts/gateway --wait
+
+      - name: Uninstall existing notification
+        run: |
+          helm uninstall notification || echo "notification release does not exist."
 
       - name: Deploy notification
         run: |
-          helm upgrade --install notification ./fitplan-helm/charts/notification --wait --force
+          helm install notification ./fitplan-helm/charts/notification --wait
+
+      - name: Uninstall existing validation
+        run: |
+          helm uninstall validation || echo "validation release does not exist."
 
       - name: Deploy validation
         run: |
-          helm upgrade --install validation ./fitplan-helm/charts/validation --wait --force
+          helm install validation ./fitplan-helm/charts/validation --wait
+
+      - name: Uninstall existing workout
+        run: |
+          helm uninstall workout || echo "workout release does not exist."
 
       - name: Deploy workout
         run: |
-          helm upgrade --install workout ./fitplan-helm/charts/workout --wait --force
-
+          helm install workout ./fitplan-helm/charts/workout --wait
       # Run frontend connection test
       - name: Run connection test to fitplanfrontend
         run: |

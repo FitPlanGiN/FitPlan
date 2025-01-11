@@ -270,9 +270,14 @@ jobs:
         run: |
           # Delete the existing pod if it exists
           kubectl delete pod curl-test --ignore-not-found
-          # Run the curl test and clean up after completion
-          kubectl run curl-test --rm --image=curlimages/curl:latest --restart=Never -- \
+          # Run the curl test
+          kubectl run curl-test --image=curlimages/curl:latest --restart=Never -- \
             curl -f http://34.107.231.170/ || (echo "Connection to fitplanfrontend failed" && exit 1)
+          # Wait for the pod to finish and fetch logs
+          kubectl wait --for=condition=Ready pod/curl-test --timeout=60s || exit 1
+          kubectl logs curl-test
+          # Clean up the test pod
+          kubectl delete pod curl-test --ignore-not-found
 
 
       #- name: Run connection test to fitplanfrontend

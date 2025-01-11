@@ -11,4 +11,4 @@ configserver:
   port: 8888
 
 config:
-  jwtIssuerUri: "http://34.118.122.132:31824/realms/spring-microservices-security-realm"
+  jwtIssuerUri: "http://keycloak.default.svc.cluster.local:8080/realms/spring-microservices-security-realm"

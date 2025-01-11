@@ -87,7 +87,6 @@ kind: Service
 metadata:
   name: gateway
 spec:
-  type: ClusterIP
   selector:
     app: gateway
   ports:
@@ -100,6 +99,6 @@ kind: ConfigMap
 metadata:
   name: gateway-config
 data:
-  SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI: "http://34.118.122.132:31824/realms/spring-microservices-security-realm"
-  #SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI: "http://keycloak.default.svc.cluster.local:8080/realms/spring-microservices-security-realm"
+  #SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI: "http://34.118.122.132:31824/realms/spring-microservices-security-realm"
+  SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI: "http://keycloak.default.svc.cluster.local:8080/realms/spring-microservices-security-realm"
 

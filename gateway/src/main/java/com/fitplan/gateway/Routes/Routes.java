@@ -31,7 +31,7 @@ public class Routes {
     public RouterFunction<ServerResponse> exerciseServiceRoute() {
 
         return route("exercise")
-                .route(RequestPredicates.path("/api/exercise"), HandlerFunctions.http(exerciseServiceUrl))
+                .route(RequestPredicates.path("/api/exercise"), HandlerFunctions.http("http://exercise.default.svc.cluster.local:8080"))
                 .filter(CircuitBreakerFilterFunctions.circuitBreaker("exerciseServiceCircuitBreaker", URI.create("forward:/fallbackRoute")))
                 .build();
     }
@@ -40,7 +40,7 @@ public class Routes {
     public RouterFunction<ServerResponse> workoutServiceRoute() {
 
         return route("workout")
-                .route(RequestPredicates.path("/api/workout"), HandlerFunctions.http(workoutServiceUrl))
+                .route(RequestPredicates.path("/api/workout"), HandlerFunctions.http("http://exercise.default.svc.cluster.local:8081"))
                 .filter(CircuitBreakerFilterFunctions.circuitBreaker("workoutServiceCircuitBreaker", URI.create("forward:/fallbackRoute")))
                 .build();
     }
@@ -50,7 +50,7 @@ public class Routes {
 
         return route("validation")
                 .filter(CircuitBreakerFilterFunctions.circuitBreaker("validationServiceCircuitBreaker", URI.create("forward:/fallbackRoute")))
-                .route(RequestPredicates.path("/api/validation"), HandlerFunctions.http(validationServiceUrl))
+                .route(RequestPredicates.path("/api/validation"), HandlerFunctions.http("http://exercise.default.svc.cluster.local:8082"))
                 .build();
     }
 

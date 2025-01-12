@@ -20,11 +20,6 @@ spec:
         - name: validation
           image: lordsecond/validation:latest
           env:
-            #- name: SPRING_DATASOURCE_URL
-            #  valueFrom:
-            #    configMapKeyRef:
-            #      key: SPRING_DATASOURCE_URL
-            #      name: inventory-service-config
             - name: OPENAI_API_KEY
               valueFrom:
                 secretKeyRef:
@@ -68,13 +63,6 @@ spec:
     - protocol: TCP
       port: 8082
       targetPort: 8082
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: validation-config
-  #data:
-  #SPRING_DATASOURCE_URL: "jdbc:mysql://mysql.default.svc.cluster.local:3306/inventory_service"
 ---
 apiVersion: v1
 kind: Secret

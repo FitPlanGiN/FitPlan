@@ -19,6 +19,6 @@ public class OpenAPIConfig {
                         .license(new License().name("Apache 2.0").url("http://springdoc.org")))
                 .externalDocs(new ExternalDocumentation()
                         .description("Workout Service External Documentation")
-                        .url("https://example.com"));
+                        .url("https://github.com/FitPlanGiN/FitPlan"));
     }
 }

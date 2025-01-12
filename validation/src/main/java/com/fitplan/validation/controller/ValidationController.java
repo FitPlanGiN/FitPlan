@@ -18,18 +18,9 @@ public class ValidationController {
     }
 
 
-    /*
-    @PostMapping
-    @ResponseStatus(HttpStatus.OK)
-    public String askAI(@RequestBody Workout workout) {
-        // Pass the WorkoutDTO to the service
-        return validationService.askAI(workout);
-    }*/
-
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public String askAI(@RequestParam String name, @RequestParam String description) {
-        // Pass the query parameters to the service
         return validationService.askAI(name, description);
     }
 }

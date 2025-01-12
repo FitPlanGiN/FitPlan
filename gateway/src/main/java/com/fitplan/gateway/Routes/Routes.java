@@ -31,7 +31,7 @@ public class Routes {
     public RouterFunction<ServerResponse> exerciseServiceRoute() {
 
         return route("exercise")
-                .route(RequestPredicates.path("/api/exercise"), HandlerFunctions.http("http://exercise.default.svc.cluster.local:8080"))
+                .route(RequestPredicates.path("/api/exercise"), HandlerFunctions.http(exerciseServiceUrl))
                 .filter(CircuitBreakerFilterFunctions.circuitBreaker("exerciseServiceCircuitBreaker", URI.create("forward:/fallbackRoute")))
                 .build();
     }
@@ -40,7 +40,7 @@ public class Routes {
     public RouterFunction<ServerResponse> workoutServiceRoute() {
 
         return route("workout")
-                .route(RequestPredicates.path("/api/workout"), HandlerFunctions.http("http://exercise.default.svc.cluster.local:8081"))
+                .route(RequestPredicates.path("/api/workout"), HandlerFunctions.http(workoutServiceUrl))
                 .filter(CircuitBreakerFilterFunctions.circuitBreaker("workoutServiceCircuitBreaker", URI.create("forward:/fallbackRoute")))
                 .build();
     }
@@ -50,7 +50,7 @@ public class Routes {
 
         return route("validation")
                 .filter(CircuitBreakerFilterFunctions.circuitBreaker("validationServiceCircuitBreaker", URI.create("forward:/fallbackRoute")))
-                .route(RequestPredicates.path("/api/validation"), HandlerFunctions.http("http://exercise.default.svc.cluster.local:8082"))
+                .route(RequestPredicates.path("/api/validation"), HandlerFunctions.http(validationServiceUrl))
                 .build();
     }
 
@@ -86,7 +86,7 @@ public class Routes {
     @Bean
     public RouterFunction<ServerResponse> fallbackRoute() {
         return route("fallbackRoute")
-                .GET("/fallbackRoute", request -> ServerResponse.status(HttpStatus.SERVICE_UNAVAILABLE).body("Service Unavailable, please try again later"))
+                .GET("/fallbackRoute", request -> ServerResponse.status(HttpStatus.SERVICE_UNAVAILABLE).body("Service Unavailable, please try again later, HORUS HAS BETRAYED US"))
                 .build();
     }
 }

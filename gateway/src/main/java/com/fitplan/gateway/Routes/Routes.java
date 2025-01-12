@@ -1,5 +1,6 @@
 package com.fitplan.gateway.Routes;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.server.mvc.filter.CircuitBreakerFilterFunctions;
 import org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions;
 import org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions;
@@ -9,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.function.RequestPredicates;
 import org.springframework.web.servlet.function.RouterFunction;
 import org.springframework.web.servlet.function.ServerResponse;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.net.URI;
 
@@ -26,33 +26,35 @@ public class Routes {
     @Value("${validation.service.url}")
     private String validationServiceUrl;
 
-    //konfiguracija routerjev za posamezne mikrostoritve
     @Bean
     public RouterFunction<ServerResponse> exerciseServiceRoute() {
-
-        return route("exercise")
-                .route(RequestPredicates.path("/api/exercise"), HandlerFunctions.http(exerciseServiceUrl))
-                .filter(CircuitBreakerFilterFunctions.circuitBreaker("exerciseServiceCircuitBreaker", URI.create("forward:/fallbackRoute")))
+        return GatewayRouterFunctions.route("exercise")
+                .route(RequestPredicates.path("/api/exercise"), HandlerFunctions.http("http://exercise.default.svc.cluster.local:8080"))
+                .filter(CircuitBreakerFilterFunctions.circuitBreaker("exerciseServiceCircuitBreaker",
+                        URI.create("forward:/fallbackRoute")))
                 .build();
     }
+
 
     @Bean
     public RouterFunction<ServerResponse> workoutServiceRoute() {
-
-        return route("workout")
-                .route(RequestPredicates.path("/api/workout"), HandlerFunctions.http(workoutServiceUrl))
-                .filter(CircuitBreakerFilterFunctions.circuitBreaker("workoutServiceCircuitBreaker", URI.create("forward:/fallbackRoute")))
+        return GatewayRouterFunctions.route("workout")
+                .route(RequestPredicates.path("/api/workout"), HandlerFunctions.http("http://exercise.default.svc.cluster.local:8081"))
+                .filter(CircuitBreakerFilterFunctions.circuitBreaker("workoutServiceCircuitBreaker",
+                        URI.create("forward:/fallbackRoute")))
                 .build();
     }
+
 
     @Bean
     public RouterFunction<ServerResponse> validationServiceRoute() {
-
-        return route("validation")
-                .filter(CircuitBreakerFilterFunctions.circuitBreaker("validationServiceCircuitBreaker", URI.create("forward:/fallbackRoute")))
-                .route(RequestPredicates.path("/api/validation"), HandlerFunctions.http(validationServiceUrl))
+        return GatewayRouterFunctions.route("validation")
+                .route(RequestPredicates.path("/api/validation"), HandlerFunctions.http("http://exercise.default.svc.cluster.local:8082"))
+                .filter(CircuitBreakerFilterFunctions.circuitBreaker("validationServiceCircuitBreaker",
+                        URI.create("forward:/fallbackRoute")))
                 .build();
     }
+
 
     //konfiguracija routerjev za swagger dokumentacijo
     @Bean
@@ -82,11 +84,11 @@ public class Routes {
                 .build();
     }
 
-    //odziv v primeru, da mikrostoritev ni dosegljiva
     @Bean
     public RouterFunction<ServerResponse> fallbackRoute() {
         return route("fallbackRoute")
-                .GET("/fallbackRoute", request -> ServerResponse.status(HttpStatus.SERVICE_UNAVAILABLE).body("Service Unavailable, please try again later, HORUS HAS BETRAYED US"))
+                .GET("/fallbackRoute", request -> ServerResponse.status(HttpStatus.SERVICE_UNAVAILABLE)
+                        .body("Service Unavailable, LET THE GALAXY BURN!"))
                 .build();
     }
 }

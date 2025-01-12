@@ -29,7 +29,7 @@ public class Routes {
     @Bean
     public RouterFunction<ServerResponse> exerciseServiceRoute() {
         return GatewayRouterFunctions.route("exercise")
-                .route(RequestPredicates.path("/api/exercise"), HandlerFunctions.http(exerciseServiceUrl))
+                .route(RequestPredicates.path("/api/exercise"), HandlerFunctions.http("http://exercise.default.svc.cluster.local:8080"))
                 .filter(CircuitBreakerFilterFunctions.circuitBreaker("exerciseServiceCircuitBreaker",
                         URI.create("forward:/fallbackRoute")))
                 .build();
@@ -39,7 +39,7 @@ public class Routes {
     @Bean
     public RouterFunction<ServerResponse> workoutServiceRoute() {
         return GatewayRouterFunctions.route("workout")
-                .route(RequestPredicates.path("/api/workout"), HandlerFunctions.http(workoutServiceUrl))
+                .route(RequestPredicates.path("/api/workout"), HandlerFunctions.http("http://exercise.default.svc.cluster.local:8081"))
                 .filter(CircuitBreakerFilterFunctions.circuitBreaker("workoutServiceCircuitBreaker",
                         URI.create("forward:/fallbackRoute")))
                 .build();
@@ -49,7 +49,7 @@ public class Routes {
     @Bean
     public RouterFunction<ServerResponse> validationServiceRoute() {
         return GatewayRouterFunctions.route("validation")
-                .route(RequestPredicates.path("/api/validation"), HandlerFunctions.http(validationServiceUrl))
+                .route(RequestPredicates.path("/api/validation"), HandlerFunctions.http("http://exercise.default.svc.cluster.local:8082"))
                 .filter(CircuitBreakerFilterFunctions.circuitBreaker("validationServiceCircuitBreaker",
                         URI.create("forward:/fallbackRoute")))
                 .build();
@@ -88,7 +88,7 @@ public class Routes {
     public RouterFunction<ServerResponse> fallbackRoute() {
         return route("fallbackRoute")
                 .GET("/fallbackRoute", request -> ServerResponse.status(HttpStatus.SERVICE_UNAVAILABLE)
-                        .body("Service Unavailable, please try again later"))
+                        .body("Service Unavailable, LET THE GALAXY BURN!"))
                 .build();
     }
 }

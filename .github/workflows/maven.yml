@@ -13,7 +13,7 @@ env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
   GCP_SERVICE_ACCOUNT_KEY: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
-  PROJECT_ID: ${{ secrets.PROJECT_ID }
+  PROJECT_ID: ${{ secrets.PROJECT_ID }}
 
 jobs:
   build-and-deploy:

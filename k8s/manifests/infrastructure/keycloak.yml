@@ -19,22 +19,22 @@ spec:
             - containerPort: 8080
           args: ["start-dev", "--import-realm"]
           env:
-            #- name: KC_HTTP_ONLY_COOKIE
-            #  value: "true"
-            #- name: KEYCLOAK_COOKIE_SAMESITE
-            #  value: "None"
-            #- name: KEYCLOAK_COOKIE_SECURE
-            #  value: "false"  # Set to "true" if using HTTPS
-            #- name: PROXY_ADDRESS_FORWARDING
-            #  value: "true"
-            #- name: KEYCLOAK_PROXY
-            #  value: "edge"
+            - name: KC_HTTP_ONLY_COOKIE
+              value: "true"
+            - name: KEYCLOAK_COOKIE_SAMESITE
+              value: "None"
+            - name: KEYCLOAK_COOKIE_SECURE
+              value: "false"  # Set to "true" if using HTTPS
+            - name: PROXY_ADDRESS_FORWARDING
+              value: "true"
+            - name: KEYCLOAK_PROXY
+              value: "edge"
+            - name: KC_HOSTNAME_STRICT
+              value: "false"
             #- name: KEYCLOAK_FRONTEND_URL
             #  value: "http://<NodeIP>:<NodePort>/auth"  # Replace with actual IP and port
-            #- name: KC_HOSTNAME_STRICT
-            #  value: "false"
             #- name: KC_HOSTNAME
-             # value: "keycloak.default.svc.cluster.local"
+            # value: "keycloak.default.svc.cluster.local"
             #- name: KC_HOSTNAME
             #  value: "localhost:8080"
             - name: DB_VENDOR

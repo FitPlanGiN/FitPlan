@@ -19,20 +19,20 @@ spec:
             - containerPort: 8080
           args: ["start-dev", "--import-realm"]
           env:
-            #- name: KC_HTTP_ONLY_COOKIE
-            #  value: "true"
-            #- name: KEYCLOAK_COOKIE_SAMESITE
-            #  value: "None"
-            #- name: KEYCLOAK_COOKIE_SECURE
-            #  value: "false"  # Set to "true" if using HTTPS
-            #- name: PROXY_ADDRESS_FORWARDING
-            #  value: "true"
-            #- name: KEYCLOAK_PROXY
-            #  value: "edge"
+            - name: KC_HTTP_ONLY_COOKIE
+              value: "true"
+            - name: KEYCLOAK_COOKIE_SAMESITE
+              value: "None"
+            - name: KEYCLOAK_COOKIE_SECURE
+              value: "false"  # Set to "true" if using HTTPS
+            - name: PROXY_ADDRESS_FORWARDING
+              value: "true"
+            - name: KEYCLOAK_PROXY
+              value: "edge"
             #- name: KEYCLOAK_FRONTEND_URL
             #  value: "http://<NodeIP>:<NodePort>/auth"  # Replace with actual IP and port
-            #- name: KC_HOSTNAME_STRICT
-            #  value: "false"
+            - name: KC_HOSTNAME_STRICT
+              value: "false"
             #- name: KC_HOSTNAME
              # value: "keycloak.default.svc.cluster.local"
             #- name: KC_HOSTNAME
@@ -775,10 +775,10 @@ data:
           "alwaysDisplayInConsole": false,
           "clientAuthenticatorType": "client-secret",
           "redirectUris": [
-            "http://localhost:4200"
+            "*"
           ],
           "webOrigins": [
-            "*"
+            "http://34.118.122.132:31824"
           ],
           "notBefore": 0,
           "bearerOnly": false,
@@ -1649,14 +1649,14 @@ data:
             "subComponents": {},
             "config": {
               "allowed-protocol-mapper-types": [
+                "oidc-full-name-mapper",
                 "oidc-sha256-pairwise-sub-mapper",
                 "oidc-usermodel-property-mapper",
-                "oidc-address-mapper",
+                "oidc-usermodel-attribute-mapper",
                 "saml-user-attribute-mapper",
                 "saml-role-list-mapper",
-                "oidc-full-name-mapper",
-                "oidc-usermodel-attribute-mapper",
-                "saml-user-property-mapper"
+                "saml-user-property-mapper",
+                "oidc-address-mapper"
               ]
             }
           },
@@ -1735,14 +1735,14 @@ data:
             "subComponents": {},
             "config": {
               "allowed-protocol-mapper-types": [
-                "oidc-address-mapper",
+                "saml-role-list-mapper",
                 "oidc-sha256-pairwise-sub-mapper",
-                "oidc-usermodel-property-mapper",
-                "oidc-usermodel-attribute-mapper",
-                "saml-user-property-mapper",
                 "saml-user-attribute-mapper",
-                "oidc-full-name-mapper",
-                "saml-role-list-mapper"
+                "saml-user-property-mapper",
+                "oidc-usermodel-property-mapper",
+                "oidc-address-mapper",
+                "oidc-usermodel-attribute-mapper",
+                "oidc-full-name-mapper"
               ]
             }
           }

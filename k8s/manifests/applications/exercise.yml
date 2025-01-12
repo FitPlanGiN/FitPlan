@@ -15,7 +15,7 @@ spec:
       initContainers:
         - name: wait-for-configserver
           image: busybox
-          command: [ 'sh', '-c', 'until nc -z configserver.default.svc.cluster.local 8888; do echo waiting for configserver; sleep 5; done' ]
+          command: [ 'sh', '-c', 'until nc -z configserver 8888; do echo waiting for configserver; sleep 5; done' ]
       containers:
         - name: exercise
           image: lordsecond/exercise:latest

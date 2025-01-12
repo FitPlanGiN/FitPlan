@@ -75,24 +75,3 @@ metadata:
   name: notification-config
 data:
   SPRING_KAFKA_CONSUMER_PROPERTIES_SCHEMA_REGISTRY_URL: "http://schema-registry.default.svc.cluster.local:8081"
----
-#---
-#apiVersion: v1
-#kind: ConfigMap
-#metadata:
-#  name: fluentd-config
-#data:
-#  fluentd.conf: |
-#    <source>
-#      @type forward
-#      port 24224
-#    </source>
-#
-#    <match **>
-#      @type elasticsearch
-#      host elasticsearch.default.svc.cluster.local
-#     port 9200
-#     logstash_format true
-#     logstash_prefix fluentd
-#     flush_interval 5s
-#  </match>

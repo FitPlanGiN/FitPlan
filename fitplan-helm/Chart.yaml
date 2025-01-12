@@ -67,9 +67,4 @@ dependencies:
   - name: workout
     version: 0.1.0
     repository: file://charts/workout
-  - name: elasticsearch
-    version: 0.1.0
-    repository: file://charts/elasticsearch
-  - name: fluentd
-    version: 0.1.0
-    repository: file://charts/fluentd
+

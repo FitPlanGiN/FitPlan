@@ -23,8 +23,5 @@ helm upgrade --install gateway ./fitplan-helm/charts/gateway --wait
 helm upgrade --install notification ./fitplan-helm/charts/notification --wait
 helm upgrade --install validation ./fitplan-helm/charts/validation --wait
 helm upgrade --install workout ./fitplan-helm/charts/workout --wait
-helm upgrade --install workout ./fitplan-helm/charts/elasticsearch --wait
-helm upgrade --install workout ./fitplan-helm/charts/elasticsearch --wait
-helm upgrade --install workout ./fitplan-helm/charts/fluentd --wait
 
 echo "Deployment completed successfully!"

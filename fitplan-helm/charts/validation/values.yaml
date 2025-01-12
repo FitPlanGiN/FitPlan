@@ -9,7 +9,3 @@ service:
 
 configserver:
   port: 8888
-
-fluentd:
-  enabled: true
-  address: fluentd.logging.svc.cluster.local:24224

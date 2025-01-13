@@ -23,7 +23,10 @@ public class WorkoutService {
 
 
     public String createWorkout(WorkoutRequest workoutRequest){
+        log.info("Pošiljanje zahteve za validacijo");
         String answerAI = validationClient.askAI(workoutRequest.name(), workoutRequest.description());
+        log.info("Odgovor sprejet: {}", answerAI);
+
         //mapiranje WorkoutRequest na Workout object
         Workout workout = new Workout();
         workout.setName(workoutRequest.name());

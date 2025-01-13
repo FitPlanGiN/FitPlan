@@ -111,3 +111,16 @@ data:
               matcherRegex: \[.+,(.+?),
               name: TraceID
               url: $${__value.raw}
+      - name: Elasticsearch
+        type: elasticsearch
+        access: proxy
+        url: http://elasticsearch.default.svc.cluster.local:9200
+        basicAuth: false
+        editable: true
+        jsonData:
+          timeField: "@timestamp"
+          esVersion: 7
+          maxConcurrentShardRequests: 5
+          logLevelField: "level"
+          logMessageField: "message"
+          interval: "1m"

@@ -33,49 +33,63 @@ Aplikacija temelji na mikrostoritveni arhitekturi:
 4. **AI povratne informacije:** Nasveti za izboljšanje vadbenih načrtov.
 
 
-## Namestitev
+# Installation Guide
 
-### Klonirajte repozitorij projekta:
-
+## Clone Repository
+```bash
 git clone https://github.com/FitPlanGiN/FitPlan
 cd FitPlan/k8s/kind
+```
 
-### Ustvarjanje Kubernetes gruče
-
-Ustvarite Kind Kubernetes gručo z uporabo konfiguracijske datoteke:
+## Creating Kubernetes Cluster
+Create a Kind Kubernetes cluster using the configuration file:
+```bash
 kind create cluster --name microservices --config kind-config.yaml
+```
 
-Nato izberite kontekst za delo z novo ustvarjeno gručo:
+Select the context for working with the newly created cluster:
+```bash
 kubectl config use-context kind-microservices
+```
 
-### Uvedba manifestov na gručo
-
+## Deploy Manifests to Cluster
+```bash
 cd ../manifests
 kubectl apply -f infrastructure
 kubectl apply -f applications
+```
 
-Opomba: Če mikrostoritve ostanejo zamrznjene v initcontainer, jih ponovno zaženite:
-
-kubectl delete deployment ime_poda
+> **Note**: If microservices remain frozen in initcontainer, restart them:
+```bash
+kubectl delete deployment pod_name
 kubectl apply -f applications
+```
 
-### Dodajanje zapisa v hosts datoteko
-Za pravilno delovanje aplikacije dodajte naslednji zapis v datoteko /etc/hosts (ali ustrezno datoteko za vaš OS):
-
+## Add Hosts File Entry
+For proper application functionality, add the following entry to your `/etc/hosts` file (or equivalent for your OS):
+```
 127.0.0.1 keycloak.default.svc.cluster.local
+```
+
+Then flush DNS cache:
+```bash
 ipconfig /flushdns
+```
 
-### Port forwarding (obvezen)
-
+## Port Forwarding (Required)
+```bash
 kubectl port-forward svc/fitplanfrontend 4200:80
 kubectl port-forward svc/keycloak 8080:8080
 kubectl port-forward svc/gateway 9000:9000
+```
 
-### Vpogled v metrike in beleženje dnevnikov
-
+## Metrics and Logging
+```bash
 kubectl port-forward svc/grafana 3000:3000
+```
 
-### Izbris gruče
-
+## Delete Cluster
+```bash
 kubectl delete deployments --all
 kind delete cluster
+```

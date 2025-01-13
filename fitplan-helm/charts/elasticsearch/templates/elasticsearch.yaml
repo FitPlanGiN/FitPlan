@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-elasticsearch
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: elasticsearch
+spec:
+  serviceName: {{ .Release.Name }}-elasticsearch
+  replicas: {{ .Values.elasticsearch.replicas }}
+  selector:
+    matchLabels:
+      app: elasticsearch
+  template:
+    metadata:
+      labels:
+        app: elasticsearch
+    spec:
+      containers:
+        - name: elasticsearch
+          image: {{ .Values.elasticsearch.image.repository }}:{{ .Values.elasticsearch.image.tag }}
+          ports:
+            - containerPort: 9200
+              name: http
+            - containerPort: 9300
+              name: transport
+          env:
+            - name: discovery.type
+              value: single-node
+            - name: cluster.name
+              value: {{ .Values.elasticsearch.clusterName }}
+            - name: node.name
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: bootstrap.memory_lock
+              value: "true"
+          volumeMounts:
+            - name: elasticsearch-data
+              mountPath: /usr/share/elasticsearch/data
+      volumes:
+        - name: elasticsearch-data
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-elasticsearch
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: elasticsearch
+spec:
+  ports:
+    - port: 9200
+      targetPort: 9200
+      protocol: TCP
+      name: http
+    - port: 9300
+      targetPort: 9300
+      protocol: TCP
+      name: transport
+  selector:
+    app: elasticsearch
+---

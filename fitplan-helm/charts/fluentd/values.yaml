@@ -1,0 +1,7 @@
+fluentd:
+  image:
+    repository: fluent/fluentd-kubernetes-daemonset
+    tag: v1.15.3-elasticsearch7
+elasticsearch:
+  host: "elasticsearch.default.svc.cluster.local"
+  port: 9200

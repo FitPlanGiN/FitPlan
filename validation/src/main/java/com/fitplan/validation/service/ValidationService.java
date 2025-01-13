@@ -55,7 +55,7 @@ public class ValidationService {
 
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
-        log.info("Poslali bomo na API");
+        log.info("Poslali bomo na API v2");
 
         try {
             // Pošlje zahtevek ChatGPT-ju in pridobi odgovor

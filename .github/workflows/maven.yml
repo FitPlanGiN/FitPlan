@@ -267,17 +267,22 @@ jobs:
         run: |
           helm upgrade --install workout ./fitplan-helm/charts/workout --wait
 
-      #- name: Run curl test
-      #  run: |
-       #   # Delete the pod if it exists
-       #   kubectl delete pod curl-test --ignore-not-found
-        #  # Run the curl test pod
-         # kubectl run curl-test --image=curlimages/curl:latest --restart=Never -- \
-          #  curl -f http://34.107.231.170/ || (echo "Connection to fitplanfrontend failed" && exit 1)
-          # Fetch logs to verify the output
-         # kubectl logs curl-test
-          # Clean up the test pod
-        #  kubectl delete pod curl-test --ignore-not-found
+     #- name: Uninstall existing elasticsearch
+       #  run: |
+       #    helm uninstall elasticsearch || echo "elasticsearch release does not exist."
+
+      - name: Deploy elasticsearch
+        run: |
+          helm upgrade --install elasticsearch ./fitplan-helm/charts/elasticsearch --wait
+
+     #- name: Uninstall existing fluentd
+    #  run: |
+    #    helm uninstall fluentd || echo "fluentd release does not exist."
+
+      - name: Deploy elasticsearch
+        run: |
+          helm upgrade --install fluentd ./fitplan-helm/charts/fluentd --wait
+      
 
       - name: Test FitPlan Frontend via Public IP
         run: |

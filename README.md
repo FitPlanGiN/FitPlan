@@ -6,7 +6,7 @@ FitPlan je aplikacija za načrtovanje fitnes vadb in beleženje napredka. Namen 
 
 ## Arhitektura
 ### Pregled
-Aplikacija temelji na mikrostoritveni arhitekturi:
+Aplikacija temelji na mikrostoritveni "cloud native" arhitekturi:
 - **Frontend mikrostoritev**: Angular + TypeScript za uporabniški vmesnik.
 - **Gateway storitev**: Preusmerja zahteve do ustreznih mikrostoritev.
 - **Workout mikrostoritev**: Upravljanje vadbenih načrtov in komunikacija z drugimi storitvami.
